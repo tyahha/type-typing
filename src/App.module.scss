@@ -5,9 +5,22 @@
 }
 
 .app {
-  width: 800px;
+  width: 782px;
   height: 100%;
   color: #4e4d5a;
   background-color: #a8a1e7;
   margin: 0 auto;
+}
+
+.keyContainer1 {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.keyLineContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 260px;
 }

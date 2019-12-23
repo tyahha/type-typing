@@ -1,4 +1,4 @@
-$keyButtonLength: 30px;
+$keyButtonLength: 48px;
 
 .keyButton {
   width: $keyButtonLength;
@@ -6,8 +6,27 @@ $keyButtonLength: 30px;
   border-radius: 5px;
   border-color: rgb(55, 55, 65);
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   text-align: center;
-  font-size: 30px;
-  vertical-align: middle;
+  font-size: 38px;
+  line-height: 43px;
+  background-color: rgb(185, 204, 230);
+}
+
+.keyButtonOneHalf {
+  width: 75px;
+}
+
+.keyButtonDouble {
+  width: 100px;
+}
+
+.keyButtonDoubleHalf {
+  width: 125px;
+}
+
+.keyButtonSpace {
+  width: 230px;
+  font-size: 35px;
+  line-height: 35px;
 }
