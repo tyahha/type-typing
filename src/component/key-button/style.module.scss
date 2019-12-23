@@ -1,0 +1,13 @@
+$keyButtonLength: 30px;
+
+.keyButton {
+  width: $keyButtonLength;
+  height: $keyButtonLength;
+  border-radius: 5px;
+  border-color: rgb(55, 55, 65);
+  border-style: solid;
+  border-width: 2px;
+  text-align: center;
+  font-size: 30px;
+  vertical-align: middle;
+}
