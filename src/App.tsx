@@ -7,13 +7,14 @@ import {
   KeyButtonDoubleHalf,
   KeyButtonSpace
 } from "./component/key-button/KeyButton";
+import { KeyLine } from "./component/key-line";
 
 const App: React.FC = () => {
   return (
     <main className={style.main}>
       <div className={style.app}>
         <div className={style.keyLineContainer}>
-          <div className={style.keyContainer1}>
+          <KeyLine>
             <KeyButton />
             <KeyButton>1</KeyButton>
             <KeyButton>2</KeyButton>
@@ -29,8 +30,8 @@ const App: React.FC = () => {
             <KeyButton />
             <KeyButton />
             <KeyButton />
-          </div>
-          <div className={style.keyContainer1}>
+          </KeyLine>
+          <KeyLine>
             <KeyButtonOneHalf />
             <KeyButton>Q</KeyButton>
             <KeyButton>W</KeyButton>
@@ -45,8 +46,8 @@ const App: React.FC = () => {
             <KeyButton>@</KeyButton>
             <KeyButton />
             <KeyButtonOneHalf />
-          </div>
-          <div className={style.keyContainer1}>
+          </KeyLine>
+          <KeyLine>
             <KeyButtonDouble />
             <KeyButton>A</KeyButton>
             <KeyButton>S</KeyButton>
@@ -61,8 +62,8 @@ const App: React.FC = () => {
             <KeyButton>:</KeyButton>
             <KeyButton />
             <KeyButton />
-          </div>
-          <div className={style.keyContainer1}>
+          </KeyLine>
+          <KeyLine>
             <KeyButtonDoubleHalf />
             <KeyButton>Z</KeyButton>
             <KeyButton>X</KeyButton>
@@ -76,8 +77,8 @@ const App: React.FC = () => {
             <KeyButton>/</KeyButton>
             <KeyButton>\</KeyButton>
             <KeyButtonOneHalf />
-          </div>
-          <div className={style.keyContainer1}>
+          </KeyLine>
+          <KeyLine>
             <KeyButtonOneHalf />
             <KeyButton />
             <KeyButton />
@@ -88,7 +89,7 @@ const App: React.FC = () => {
             <KeyButtonOneHalf />
             <KeyButton />
             <KeyButtonOneHalf />
-          </div>
+          </KeyLine>
         </div>
       </div>
     </main>

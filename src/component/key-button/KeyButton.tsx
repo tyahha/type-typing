@@ -1,11 +1,18 @@
 import React from "react";
 import classNames from "classnames";
 
-import style from "./style.module.scss";
+import style from "./KeyButton.module.scss";
 
-export const KeyButton: React.FC<{ className?: string }> = props => {
+export const KeyButton: React.FC<{
+  highLight?: boolean;
+  className?: string;
+}> = props => {
   return (
-    <div className={classNames(style.keyButton, props.className)}>
+    <div
+      className={classNames(style.keyButton, props.className, {
+        [style.highLight]: props.highLight
+      })}
+    >
       {props.children}
     </div>
   );
