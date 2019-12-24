@@ -1,0 +1,32 @@
+.hands {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hand {
+  display: flex;
+  width: 320px;
+  justify-content: space-between;
+}
+.hand.left {
+  padding-left: 30px;
+}
+.hand.right {
+  padding-right: 30px;
+}
+
+.finger {
+  border-radius: 30px 30px 0 0;
+  background-color: rgb(110, 110, 110);
+  width: 60px;
+  height: 100px;
+  margin: auto 0 0 0;
+}
+
+.finger.thumb {
+  height: 50px;
+}
+
+.finger.little {
+  height: 80px;
+}
