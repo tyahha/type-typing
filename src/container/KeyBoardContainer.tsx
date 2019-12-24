@@ -4,7 +4,12 @@ import style from "../App.module.scss";
 
 import { KeyLine } from "../component/key-line";
 import { KeyButton } from "../component/key-button";
-import { KeyButtonOneHalf, KeyButtonDouble, KeyButtonDoubleHalf, KeyButtonSpace } from "../component/key-button/KeyButton";
+import {
+  KeyButtonOneHalf,
+  KeyButtonDouble,
+  KeyButtonDoubleHalf,
+  KeyButtonSpace
+} from "../component/key-button/KeyButton";
 import { KeyContainer } from "./KeyContainer";
 
 const line1Keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-"];
@@ -12,40 +17,39 @@ const line2Keys = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "@"];
 const line3Keys = ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", ":"];
 const line4Keys = ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "\\"];
 
-export const KeyBoardContainer = () => {
-  const nextInputChar = "S";
+export const KeyBoardContainer = ({ nextChar }: { nextChar: string }) => {
   return (
     <div className={style.keyLineContainer}>
       <KeyLine>
         <KeyButton />
-        {
-          line1Keys.map(c => <KeyContainer char={c} nextInputChar={nextInputChar} />)
-        }
+        {line1Keys.map(c => (
+          <KeyContainer key={c} char={c} nextChar={nextChar} />
+        ))}
         <KeyButton />
         <KeyButton />
         <KeyButton />
       </KeyLine>
       <KeyLine>
         <KeyButtonOneHalf />
-        {
-          line2Keys.map(c => <KeyContainer char={c} nextInputChar={nextInputChar} />)
-        }
+        {line2Keys.map(c => (
+          <KeyContainer key={c} char={c} nextChar={nextChar} />
+        ))}
         <KeyButton />
         <KeyButtonOneHalf />
       </KeyLine>
       <KeyLine>
         <KeyButtonDouble />
-        {
-          line3Keys.map(c => <KeyContainer char={c} nextInputChar={nextInputChar} />)
-        }
+        {line3Keys.map(c => (
+          <KeyContainer key={c} char={c} nextChar={nextChar} />
+        ))}
         <KeyButton />
         <KeyButton />
       </KeyLine>
       <KeyLine>
         <KeyButtonDoubleHalf />
-        {
-          line4Keys.map(c => <KeyContainer char={c} nextInputChar={nextInputChar} />)
-        }
+        {line4Keys.map(c => (
+          <KeyContainer key={c} char={c} nextChar={nextChar} />
+        ))}
         <KeyButtonOneHalf />
       </KeyLine>
       <KeyLine>
@@ -60,6 +64,6 @@ export const KeyBoardContainer = () => {
         <KeyButton />
         <KeyButtonOneHalf />
       </KeyLine>
-    </div >
+    </div>
   );
 };

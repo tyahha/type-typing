@@ -1,13 +1,16 @@
 import React from "react";
 import { KeyButton } from "../component/key-button";
 
-export const KeyContainer = (props: {
+export const KeyContainer = ({
+  char,
+  nextChar
+}: {
   char?: string;
-  nextInputChar: string;
+  nextChar: string;
 }) => {
-  return props.char == null ? (
+  return char == null ? (
     <KeyButton />
   ) : (
-      <KeyButton highLight={props.char === props.nextInputChar}>{props.char}</KeyButton>
-    );
+    <KeyButton highLight={char === nextChar}>{char}</KeyButton>
+  );
 };
