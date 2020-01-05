@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import style from "./App.module.scss";
-import { KeyBoardContainer } from "./container/KeyBoardContainer";
+import {
+  KeyBoardContainer,
+  containKeyLines
+} from "./container/KeyBoardContainer";
 import { Hands } from "./component/hands";
 import { StringDisplay } from "./component/string-display";
 import { ImgFrame } from "./component/img-frame";
+import { hazureSound } from "./assets/hazureSound";
 
 const problems = [
   {
@@ -50,15 +54,22 @@ const App: React.FC = () => {
   ]);
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === nextChar.toLowerCase()) {
-        const nextInputedCount = inputedCount + 1;
-        if (nextInputedCount < problem.alphabet.length) {
-          setInputedCount(inputedCount + 1);
+      const inputKey = e.key.toUpperCase();
+      if (containKeyLines(inputKey)) {
+        if (inputKey !== nextChar) {
+          hazureSound.pause();
+          hazureSound.currentTime = 0;
+          hazureSound.play();
         } else {
-          const nextProblemIndex = problemIndex + 1;
-          if (nextProblemIndex < problems.length) {
-            setInputedCount(0);
-            setProblemIndex(nextProblemIndex);
+          const nextInputedCount = inputedCount + 1;
+          if (nextInputedCount < problem.alphabet.length) {
+            setInputedCount(inputedCount + 1);
+          } else {
+            const nextProblemIndex = problemIndex + 1;
+            if (nextProblemIndex < problems.length) {
+              setInputedCount(0);
+              setProblemIndex(nextProblemIndex);
+            }
           }
         }
       }

@@ -17,6 +17,12 @@ const line2Keys = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "@"];
 const line3Keys = ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", ":"];
 const line4Keys = ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "\\"];
 
+export const containKeyLines = (c: string): boolean =>
+  line1Keys.includes(c) ||
+  line2Keys.includes(c) ||
+  line3Keys.includes(c) ||
+  line4Keys.includes(c);
+
 export const KeyBoardContainer = ({ nextChar }: { nextChar: string }) => {
   return (
     <div className={style.keyLineContainer}>
