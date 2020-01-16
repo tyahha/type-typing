@@ -38,8 +38,10 @@ export const KeyButtonDoubleHalf: React.FC = props => {
   );
 };
 
-export const KeyButtonSpace: React.FC = props => {
+export const KeyButtonSpace: React.FC<{ highLight: boolean }> = props => {
   return (
-    <KeyButton className={style.keyButtonSpace}>{props.children}</KeyButton>
+    <KeyButton className={style.keyButtonSpace} highLight={props.highLight}>
+      {props.children}
+    </KeyButton>
   );
 };

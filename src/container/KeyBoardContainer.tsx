@@ -63,7 +63,7 @@ export const KeyBoardContainer = ({ nextChar }: { nextChar: string }) => {
         <KeyButton />
         <KeyButton />
         <KeyButton />
-        <KeyButtonSpace>space</KeyButtonSpace>
+        <KeyButtonSpace highLight={false}>space</KeyButtonSpace>
         <KeyButton />
         <KeyButton />
         <KeyButtonOneHalf />
