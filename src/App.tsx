@@ -10,6 +10,10 @@ import { ImgFrame } from "./component/img-frame";
 import { hazureSound } from "./assets/hazureSound";
 import { problems } from "./assets/problems";
 import { Mode } from "./model/Mode";
+import titleImgSrc from "./assets/title.png";
+import { WaitForStartStringDisplay } from "./component/string-display/StringDisplay";
+
+const titleImg = <ImgFrame imgUrl={titleImgSrc} />;
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -70,8 +74,12 @@ const App: React.FC = () => {
   return (
     <main className={style.main}>
       <div className={style.app}>
-        <ImgFrame imgUrl={problem.img} />
-        <StringDisplay inputedCount={inputedCount} problem={problem} />
+        {mode === Mode.WaitStart ? titleImg : <ImgFrame imgUrl={problem.img} />}
+        {mode === Mode.WaitStart ? (
+          <WaitForStartStringDisplay />
+        ) : (
+          <StringDisplay inputedCount={inputedCount} problem={problem} />
+        )}
         <KeyBoardContainer nextChar={nextChar} />
         <div className={style.handsAjust}>
           <Hands nextChar={nextChar} />

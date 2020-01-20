@@ -27,3 +27,11 @@ const Alphabet = (props: { char: string; inputed: boolean }) => (
     {props.char}
   </span>
 );
+
+export const WaitForStartStringDisplay = () => (
+  <div className={classNames(style.stringDisplayFrame, style.waitForStart)}>
+    <div className={style.stringDisplay}>
+      <p className={style.mainString}>スペースキーで開始</p>
+    </div>
+  </div>
+);
