@@ -35,3 +35,11 @@ export const WaitForStartStringDisplay = () => (
     </div>
   </div>
 );
+
+export const CountDownStringDisplay = (props: { count: number }) => (
+  <div className={classNames(style.stringDisplayFrame, style.countDown)}>
+    <div className={style.stringDisplay}>
+      <p className={style.mainString}>{props.count}</p>
+    </div>
+  </div>
+);

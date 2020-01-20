@@ -11,9 +11,13 @@ import { hazureSound } from "./assets/hazureSound";
 import { problems } from "./assets/problems";
 import { Mode } from "./model/Mode";
 import titleImgSrc from "./assets/title.png";
-import { WaitForStartStringDisplay } from "./component/string-display/StringDisplay";
-
-const titleImg = <ImgFrame imgUrl={titleImgSrc} />;
+import countDown1ImgSrc from "./assets/count-down-1.jpeg";
+import countDown2ImgSrc from "./assets/count-down-2.jpeg";
+import countDown3ImgSrc from "./assets/count-down-3.jpeg";
+import {
+  WaitForStartStringDisplay,
+  CountDownStringDisplay
+} from "./component/string-display/StringDisplay";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -33,13 +37,26 @@ const App: React.FC = () => {
     }
   }, [mode, problem, inputedCount]);
 
+  const [count, setCount] = useState(3);
+  useEffect(() => {
+    if (mode === Mode.CountDown) {
+      setTimeout(() => {
+        const nextCount = count - 1;
+        if (nextCount === 0) {
+          setMode(Mode.Typing);
+        }
+        setCount(nextCount);
+      }, 1000);
+    }
+  }, [mode, count]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       console.log("on keyborad event", e);
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
-          setMode(Mode.Typing);
+          setMode(Mode.CountDown);
         }
       } else if (mode === Mode.Typing) {
         const inputKey = e.key.toUpperCase();
@@ -74,9 +91,23 @@ const App: React.FC = () => {
   return (
     <main className={style.main}>
       <div className={style.app}>
-        {mode === Mode.WaitStart ? titleImg : <ImgFrame imgUrl={problem.img} />}
+        <ImgFrame
+          imgUrl={
+            mode === Mode.WaitStart
+              ? titleImgSrc
+              : mode === Mode.CountDown && count === 3
+              ? countDown3ImgSrc
+              : mode === Mode.CountDown && count === 2
+              ? countDown2ImgSrc
+              : mode === Mode.CountDown && count === 1
+              ? countDown1ImgSrc
+              : problem.img
+          }
+        />
         {mode === Mode.WaitStart ? (
           <WaitForStartStringDisplay />
+        ) : mode === Mode.CountDown ? (
+          <CountDownStringDisplay count={count} />
         ) : (
           <StringDisplay inputedCount={inputedCount} problem={problem} />
         )}
