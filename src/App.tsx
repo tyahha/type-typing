@@ -16,11 +16,14 @@ import countDown2ImgSrc from "./assets/count-down-2.jpeg";
 import countDown3ImgSrc from "./assets/count-down-3.jpeg";
 import {
   WaitForStartStringDisplay,
-  CountDownStringDisplay
+  CountDownStringDisplay,
+  ResultDisplay
 } from "./component/string-display/StringDisplay";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
+  const [startTime, setStartTime] = useState(new Date().getTime());
+  const [endTime, setEndTime] = useState(new Date().getTime());
 
   const [problemIndex, setProblemIndex] = useState(0);
   const problem = useMemo(() => problems[problemIndex], [problemIndex]);
@@ -44,6 +47,7 @@ const App: React.FC = () => {
         const nextCount = count - 1;
         if (nextCount === 0) {
           setMode(Mode.Typing);
+          setStartTime(new Date().getTime());
         }
         setCount(nextCount);
       }, 1000);
@@ -57,6 +61,14 @@ const App: React.FC = () => {
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
           setMode(Mode.CountDown);
+        }
+      } else if (mode === Mode.End) {
+        const inputKey = e.key.toUpperCase();
+        if (inputKey === "R") {
+          setCount(3);
+          setInputedCount(0);
+          setProblemIndex(0);
+          setMode(Mode.WaitStart);
         }
       } else if (mode === Mode.Typing) {
         const inputKey = e.key.toUpperCase();
@@ -74,6 +86,9 @@ const App: React.FC = () => {
               if (nextProblemIndex < problems.length) {
                 setInputedCount(0);
                 setProblemIndex(nextProblemIndex);
+              } else {
+                setEndTime(new Date().getTime());
+                setMode(Mode.End);
               }
             }
           }
@@ -93,7 +108,7 @@ const App: React.FC = () => {
       <div className={style.app}>
         <ImgFrame
           imgUrl={
-            mode === Mode.WaitStart
+            mode === Mode.WaitStart || mode === Mode.End
               ? titleImgSrc
               : mode === Mode.CountDown && count === 3
               ? countDown3ImgSrc
@@ -108,6 +123,8 @@ const App: React.FC = () => {
           <WaitForStartStringDisplay />
         ) : mode === Mode.CountDown ? (
           <CountDownStringDisplay count={count} />
+        ) : mode === Mode.End ? (
+          <ResultDisplay startTime={startTime} endTime={endTime} />
         ) : (
           <StringDisplay inputedCount={inputedCount} problem={problem} />
         )}

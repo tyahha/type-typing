@@ -2,6 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import style from "./string-display.module.scss";
 import { Problem } from "../../model/problem";
+import { diffTime } from "../../logic/diffTime";
+import { formatTime } from "../../logic/formatTime";
 
 export const StringDisplay = (props: {
   inputedCount: number;
@@ -32,6 +34,20 @@ export const WaitForStartStringDisplay = () => (
   <div className={classNames(style.stringDisplayFrame, style.waitForStart)}>
     <div className={style.stringDisplay}>
       <p className={style.mainString}>スペースキーで開始</p>
+    </div>
+  </div>
+);
+
+export const ResultDisplay = (props: {
+  startTime: number;
+  endTime: number;
+}) => (
+  <div className={classNames(style.stringDisplayFrame, style.result)}>
+    <div className={style.stringDisplay}>
+      <p className={style.mainString}>
+        {formatTime(diffTime(props.startTime, props.endTime))}
+      </p>
+      <p className={style.mainString}>(Rキーでもう一回)</p>
     </div>
   </div>
 );
