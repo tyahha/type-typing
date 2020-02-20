@@ -7,18 +7,23 @@ import { formatTime } from "../../logic/formatTime";
 
 export const StringDisplay = (props: {
   inputedCount: number;
-  problem: Problem;
+  problems: Problem[];
+  problemIndex: number;
 }) => {
+  const problem = props.problems[props.problemIndex];
+  const barWidth = `${100 -
+    (100 * props.problemIndex) / props.problems.length}%`;
   return (
     <div className={style.stringDisplayFrame}>
       <div className={style.stringDisplay}>
-        <p className={style.mainString}>{props.problem.main}</p>
-        <p className={style.hiragana}>{props.problem.kana}</p>
+        <p className={style.mainString}>{problem.main}</p>
+        <p className={style.hiragana}>{problem.kana}</p>
         <p className={style.alphabet}>
-          {props.problem.alphabet.split("").map((c, i) => (
+          {problem.alphabet.split("").map((c, i) => (
             <Alphabet key={i} char={c} inputed={i < props.inputedCount} />
           ))}
         </p>
+        <div className={style.remainProblemsBar} style={{ width: barWidth }} />
       </div>
     </div>
   );

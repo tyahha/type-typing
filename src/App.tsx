@@ -8,7 +8,6 @@ import { Hands } from "./component/hands";
 import { StringDisplay } from "./component/string-display";
 import { ImgFrame } from "./component/img-frame";
 import { hazureSound } from "./assets/hazureSound";
-import { problems } from "./assets/problems";
 import { Mode } from "./model/Mode";
 import titleImgSrc from "./assets/title.png";
 import countDown1ImgSrc from "./assets/count-down-1.jpeg";
@@ -19,7 +18,7 @@ import {
   CountDownStringDisplay,
   ResultDisplay
 } from "./component/string-display/StringDisplay";
-import { shuffleArray } from "./util/shuffleArray";
+import { getShuffledProblem } from "./logic/getShuffledProblem";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -27,9 +26,8 @@ const App: React.FC = () => {
   const [endTime, setEndTime] = useState(new Date().getTime());
 
   const [shuffledProblems, setShuffledProblems] = useState(
-    shuffleArray(problems)
+    getShuffledProblem()
   );
-  const shuffleProblem = () => setShuffledProblems(shuffleArray(problems));
   const [problemIndex, setProblemIndex] = useState(0);
   const problem = useMemo(() => shuffledProblems[problemIndex], [
     shuffledProblems,
@@ -68,7 +66,7 @@ const App: React.FC = () => {
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
-          shuffleProblem();
+          setShuffledProblems(getShuffledProblem());
           setMode(Mode.CountDown);
         }
       } else if (mode === Mode.End) {
@@ -110,7 +108,14 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener("keydown", handler);
     };
-  }, [mode, nextChar, inputedCount, problem.alphabet.length, problemIndex]);
+  }, [
+    mode,
+    nextChar,
+    inputedCount,
+    problem.alphabet.length,
+    problemIndex,
+    shuffledProblems.length
+  ]);
 
   return (
     <main className={style.main}>
@@ -135,7 +140,11 @@ const App: React.FC = () => {
         ) : mode === Mode.End ? (
           <ResultDisplay startTime={startTime} endTime={endTime} />
         ) : (
-          <StringDisplay inputedCount={inputedCount} problem={problem} />
+          <StringDisplay
+            inputedCount={inputedCount}
+            problems={shuffledProblems}
+            problemIndex={problemIndex}
+          />
         )}
         <KeyBoardContainer nextChar={nextChar} />
         <div className={style.handsAjust}>
