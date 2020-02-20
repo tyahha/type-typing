@@ -19,14 +19,22 @@ import {
   CountDownStringDisplay,
   ResultDisplay
 } from "./component/string-display/StringDisplay";
+import { shuffleArray } from "./util/shuffleArray";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
   const [startTime, setStartTime] = useState(new Date().getTime());
   const [endTime, setEndTime] = useState(new Date().getTime());
 
+  const [shuffledProblems, setShuffledProblems] = useState(
+    shuffleArray(problems)
+  );
+  const shuffleProblem = () => setShuffledProblems(shuffleArray(problems));
   const [problemIndex, setProblemIndex] = useState(0);
-  const problem = useMemo(() => problems[problemIndex], [problemIndex]);
+  const problem = useMemo(() => shuffledProblems[problemIndex], [
+    shuffledProblems,
+    problemIndex
+  ]);
 
   const [inputedCount, setInputedCount] = useState(0);
   const nextChar = useMemo(() => {
@@ -60,6 +68,7 @@ const App: React.FC = () => {
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
+          shuffleProblem();
           setMode(Mode.CountDown);
         }
       } else if (mode === Mode.End) {
@@ -83,7 +92,7 @@ const App: React.FC = () => {
               setInputedCount(inputedCount + 1);
             } else {
               const nextProblemIndex = problemIndex + 1;
-              if (nextProblemIndex < problems.length) {
+              if (nextProblemIndex < shuffledProblems.length) {
                 setInputedCount(0);
                 setProblemIndex(nextProblemIndex);
               } else {

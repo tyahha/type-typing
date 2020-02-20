@@ -2,6 +2,13 @@ import { Problem } from "../model/problem";
 
 export const problems: Problem[] = [
   {
+    img:
+      "https://storage.mantan-web.jp/images/2019/06/22/20190622dog00m200021000c/001_size6.jpg",
+    main: "嘴平伊之助",
+    kana: "はしびらいのすけ",
+    alphabet: "HASIBIRAINOSUKE"
+  },
+  {
     img: "https://www.shonenjump.com/j/rensai/img/main_kimetsu.jpg",
     main: "鬼滅の刃",
     kana: "きめつのやいば",
