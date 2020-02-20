@@ -18,19 +18,17 @@ import {
   CountDownStringDisplay,
   ResultDisplay
 } from "./component/string-display/StringDisplay";
-import { getShuffledProblem } from "./logic/getShuffledProblem";
+import { useProblems } from "./hooks/useProblems";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
   const [startTime, setStartTime] = useState(new Date().getTime());
   const [endTime, setEndTime] = useState(new Date().getTime());
 
-  const [shuffledProblems, setShuffledProblems] = useState(
-    getShuffledProblem()
-  );
+  const { problems, shuffleProblems } = useProblems();
   const [problemIndex, setProblemIndex] = useState(0);
-  const problem = useMemo(() => shuffledProblems[problemIndex], [
-    shuffledProblems,
+  const problem = useMemo(() => problems[problemIndex], [
+    problems,
     problemIndex
   ]);
 
@@ -66,7 +64,7 @@ const App: React.FC = () => {
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
-          setShuffledProblems(getShuffledProblem());
+          shuffleProblems();
           setMode(Mode.CountDown);
         }
       } else if (mode === Mode.End) {
@@ -90,7 +88,7 @@ const App: React.FC = () => {
               setInputedCount(inputedCount + 1);
             } else {
               const nextProblemIndex = problemIndex + 1;
-              if (nextProblemIndex < shuffledProblems.length) {
+              if (nextProblemIndex < problems.length) {
                 setInputedCount(0);
                 setProblemIndex(nextProblemIndex);
               } else {
@@ -114,7 +112,8 @@ const App: React.FC = () => {
     inputedCount,
     problem.alphabet.length,
     problemIndex,
-    shuffledProblems.length
+    problems.length,
+    shuffleProblems
   ]);
 
   return (
@@ -142,7 +141,7 @@ const App: React.FC = () => {
         ) : (
           <StringDisplay
             inputedCount={inputedCount}
-            problems={shuffledProblems}
+            problems={problems}
             problemIndex={problemIndex}
           />
         )}
