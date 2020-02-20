@@ -19,6 +19,7 @@ import {
   ResultDisplay
 } from "./component/string-display/StringDisplay";
 import { useProblems } from "./hooks/useProblems";
+import { useMiss } from "./hooks/useMiss";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -31,6 +32,7 @@ const App: React.FC = () => {
     problems,
     problemIndex
   ]);
+  const { misses, addMiss, resetMisses } = useMiss();
 
   const [inputedCount, setInputedCount] = useState(0);
   const nextChar = useMemo(() => {
@@ -65,6 +67,7 @@ const App: React.FC = () => {
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
           shuffleProblems();
+          resetMisses();
           setMode(Mode.CountDown);
         }
       } else if (mode === Mode.End) {
@@ -82,6 +85,7 @@ const App: React.FC = () => {
             hazureSound.pause();
             hazureSound.currentTime = 0;
             hazureSound.play();
+            addMiss(nextChar);
           } else {
             const nextInputedCount = inputedCount + 1;
             if (nextInputedCount < problem.alphabet.length) {
@@ -113,7 +117,9 @@ const App: React.FC = () => {
     problem.alphabet.length,
     problemIndex,
     problems.length,
-    shuffleProblems
+    shuffleProblems,
+    addMiss,
+    resetMisses
   ]);
 
   return (
@@ -137,7 +143,11 @@ const App: React.FC = () => {
         ) : mode === Mode.CountDown ? (
           <CountDownStringDisplay count={count} />
         ) : mode === Mode.End ? (
-          <ResultDisplay startTime={startTime} endTime={endTime} />
+          <ResultDisplay
+            startTime={startTime}
+            endTime={endTime}
+            misses={misses}
+          />
         ) : (
           <StringDisplay
             inputedCount={inputedCount}

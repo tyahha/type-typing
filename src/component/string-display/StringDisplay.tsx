@@ -46,16 +46,29 @@ export const WaitForStartStringDisplay = () => (
 export const ResultDisplay = (props: {
   startTime: number;
   endTime: number;
-}) => (
-  <div className={classNames(style.stringDisplayFrame, style.result)}>
-    <div className={style.stringDisplay}>
-      <p className={style.mainString}>
-        {formatTime(diffTime(props.startTime, props.endTime))}
-      </p>
-      <p className={style.mainString}>(Rキーでもう一回)</p>
+  misses: Map<string, number>;
+}) => {
+  const misses = [...props.misses];
+  const sortedMisses = misses.sort((a, b) => b[1] - a[1]);
+
+  return (
+    <div className={classNames(style.stringDisplayFrame, style.result)}>
+      <div className={style.stringDisplay}>
+        <p className={style.mainString}>
+          {formatTime(diffTime(props.startTime, props.endTime))}
+        </p>
+        <p className={style.mainString}>(Rキーでもう一回)</p>
+        {sortedMisses.length <= 0 ? (
+          <></>
+        ) : (
+          <p
+            className={style.mainString}
+          >{`一番間違えた文字：${sortedMisses[0][0]}(${sortedMisses[0][1]}回)`}</p>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const CountDownStringDisplay = (props: { count: number }) => (
   <div className={classNames(style.stringDisplayFrame, style.countDown)}>
