@@ -13,11 +13,12 @@ export const diffTime = (from: number, to: number): Time => {
   diff -= minute * aMinite;
 
   const second = Math.floor(diff / aSecond);
-  diff -= minute * aSecond;
+  diff -= second * aSecond;
 
   return {
     hour,
     minute,
-    second
+    second,
+    milli: diff
   };
 };
