@@ -3,6 +3,26 @@ import { Problem } from "../model/problem";
 export const problems: Problem[] = [
   {
     img:
+      "https://pbs.twimg.com/profile_images/1175673119240900608/EgmHSvYM_400x400.jpg",
+    main: "胡蝶しのぶ",
+    kana: "こちょうしのぶ",
+    alphabet: "KOTYOUSINOBU"
+  },
+  {
+    img:
+      "https://renote.jp/uploads/image/file/141667/tumblr_inline_ps2kouV5D61r1b3jj_1280.jpg",
+    main: "鬼舞辻無惨",
+    kana: "きぶつじむざん",
+    alphabet: "KIBUTUJIMUZANN"
+  },
+  {
+    img: "https://pbs.twimg.com/media/D_XOJy0U4AAax3I.jpg",
+    main: "我妻善逸",
+    kana: "あがつまぜんいつ",
+    alphabet: "AGATUMAZENITU"
+  },
+  {
+    img:
       "https://storage.mantan-web.jp/images/2019/06/22/20190622dog00m200021000c/001_size6.jpg",
     main: "嘴平伊之助",
     kana: "はしびらいのすけ",
