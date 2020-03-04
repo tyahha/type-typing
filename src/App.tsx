@@ -146,7 +146,7 @@ const App: React.FC = () => {
           <ResultDisplay
             startTime={startTime}
             endTime={endTime}
-            misses={misses}
+            missedKeyAndNumbers={misses}
           />
         ) : (
           <StringDisplay

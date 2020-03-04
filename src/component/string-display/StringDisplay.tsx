@@ -46,10 +46,13 @@ export const WaitForStartStringDisplay = () => (
 export const ResultDisplay = (props: {
   startTime: number;
   endTime: number;
-  misses: Map<string, number>;
+  missedKeyAndNumbers: Map<string, number>;
 }) => {
-  const misses = [...props.misses];
-  const sortedMisses = misses.sort((a, b) => b[1] - a[1]);
+  const misses = [...props.missedKeyAndNumbers];
+  const missStrings = misses
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([s, num]) => `${s}(${num}回)`);
 
   return (
     <div className={classNames(style.stringDisplayFrame, style.result)}>
@@ -58,12 +61,12 @@ export const ResultDisplay = (props: {
           {formatTime(diffTime(props.startTime, props.endTime))}
         </p>
         <p className={style.mainString}>(Rキーでもう一回)</p>
-        {sortedMisses.length <= 0 ? (
+        {missStrings.length <= 0 ? (
           <></>
         ) : (
           <p
             className={style.mainString}
-          >{`一番間違えた文字：${sortedMisses[0][0]}(${sortedMisses[0][1]}回)`}</p>
+          >{` ミスしやすいキー：${missStrings.join(", ")}`}</p>
         )}
       </div>
     </div>
