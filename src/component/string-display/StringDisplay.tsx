@@ -53,12 +53,16 @@ export const ResultDisplay = (props: {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
     .map(([s, num]) => `${s}(${num}回)`);
+  const allMissTypeCount = Array.from(
+    props.missedKeyAndNumbers.values()
+  ).reduce((acc, c) => acc + c, 0);
 
   return (
     <div className={classNames(style.stringDisplayFrame, style.result)}>
       <div className={style.stringDisplay}>
         <p className={style.mainString}>
-          {formatTime(diffTime(props.startTime, props.endTime))}
+          {formatTime(diffTime(props.startTime, props.endTime)) +
+            `, 総ミスタイプ数:${allMissTypeCount}回`}
         </p>
         <p className={style.mainString}>(Rキーでもう一回)</p>
         {missStrings.length <= 0 ? (
