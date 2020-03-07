@@ -15,11 +15,11 @@ import countDown2ImgSrc from "./assets/count-down-2.jpeg";
 import countDown3ImgSrc from "./assets/count-down-3.jpeg";
 import {
   WaitForStartStringDisplay,
-  CountDownStringDisplay,
-  ResultDisplay
+  CountDownStringDisplay
 } from "./component/string-display/StringDisplay";
 import { useProblems } from "./hooks/useProblems";
 import { useMiss } from "./hooks/useMiss";
+import { ResultDisplay } from "./component/result-display/resultDisplay";
 
 const App: React.FC = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -125,40 +125,46 @@ const App: React.FC = () => {
   return (
     <main className={style.main}>
       <div className={style.app}>
-        <ImgFrame
-          imgUrl={
-            mode === Mode.WaitStart || mode === Mode.End
-              ? titleImgSrc
-              : mode === Mode.CountDown && count === 3
-              ? countDown3ImgSrc
-              : mode === Mode.CountDown && count === 2
-              ? countDown2ImgSrc
-              : mode === Mode.CountDown && count === 1
-              ? countDown1ImgSrc
-              : problem.img
-          }
-        />
-        {mode === Mode.WaitStart ? (
-          <WaitForStartStringDisplay />
-        ) : mode === Mode.CountDown ? (
-          <CountDownStringDisplay count={count} />
-        ) : mode === Mode.End ? (
+        {/* {true ? ( */}
+        {mode === Mode.End ? (
           <ResultDisplay
+            problems={problems}
             startTime={startTime}
             endTime={endTime}
             missedKeyAndNumbers={misses}
           />
         ) : (
-          <StringDisplay
-            inputedCount={inputedCount}
-            problems={problems}
-            problemIndex={problemIndex}
-          />
+          <>
+            <ImgFrame
+              imgUrl={
+                mode === Mode.WaitStart
+                  ? titleImgSrc
+                  : mode === Mode.CountDown && count === 3
+                  ? countDown3ImgSrc
+                  : mode === Mode.CountDown && count === 2
+                  ? countDown2ImgSrc
+                  : mode === Mode.CountDown && count === 1
+                  ? countDown1ImgSrc
+                  : problem.img
+              }
+            />
+            {mode === Mode.WaitStart ? (
+              <WaitForStartStringDisplay />
+            ) : mode === Mode.CountDown ? (
+              <CountDownStringDisplay count={count} />
+            ) : (
+              <StringDisplay
+                inputedCount={inputedCount}
+                problems={problems}
+                problemIndex={problemIndex}
+              />
+            )}
+            <KeyBoardContainer nextChar={nextChar} />
+            <div className={style.handsAjust}>
+              <Hands nextChar={nextChar} />
+            </div>
+          </>
         )}
-        <KeyBoardContainer nextChar={nextChar} />
-        <div className={style.handsAjust}>
-          <Hands nextChar={nextChar} />
-        </div>
       </div>
     </main>
   );

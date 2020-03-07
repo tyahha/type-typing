@@ -2,8 +2,6 @@ import React from "react";
 import classNames from "classnames";
 import style from "./string-display.module.scss";
 import { Problem } from "../../model/problem";
-import { diffTime } from "../../logic/diffTime";
-import { formatTime } from "../../logic/formatTime";
 
 export const StringDisplay = (props: {
   inputedCount: number;
@@ -42,40 +40,6 @@ export const WaitForStartStringDisplay = () => (
     </div>
   </div>
 );
-
-export const ResultDisplay = (props: {
-  startTime: number;
-  endTime: number;
-  missedKeyAndNumbers: Map<string, number>;
-}) => {
-  const misses = [...props.missedKeyAndNumbers];
-  const missStrings = misses
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(([s, num]) => `${s}(${num}回)`);
-  const allMissTypeCount = Array.from(
-    props.missedKeyAndNumbers.values()
-  ).reduce((acc, c) => acc + c, 0);
-
-  return (
-    <div className={classNames(style.stringDisplayFrame, style.result)}>
-      <div className={style.stringDisplay}>
-        <p className={style.mainString}>
-          {formatTime(diffTime(props.startTime, props.endTime)) +
-            `, 総ミスタイプ数:${allMissTypeCount}回`}
-        </p>
-        <p className={style.mainString}>(Rキーでもう一回)</p>
-        {missStrings.length <= 0 ? (
-          <></>
-        ) : (
-          <p
-            className={style.mainString}
-          >{` ミスしやすいキー：${missStrings.join(", ")}`}</p>
-        )}
-      </div>
-    </div>
-  );
-};
 
 export const CountDownStringDisplay = (props: { count: number }) => (
   <div className={classNames(style.stringDisplayFrame, style.countDown)}>
