@@ -4,7 +4,7 @@ import style from "./string-display.module.scss";
 import { Problem } from "../../model/problem";
 
 export const StringDisplay = (props: {
-  inputedCount: number;
+  inputedCountOfCurrentProblem: number;
   problems: Problem[];
   problemIndex: number;
 }) => {
@@ -18,7 +18,11 @@ export const StringDisplay = (props: {
         <p className={style.hiragana}>{problem.kana}</p>
         <p className={style.alphabet}>
           {problem.alphabet.split("").map((c, i) => (
-            <Alphabet key={i} char={c} inputed={i < props.inputedCount} />
+            <Alphabet
+              key={i}
+              char={c}
+              inputed={i < props.inputedCountOfCurrentProblem}
+            />
           ))}
         </p>
         <div className={style.remainProblemsBar} style={{ width: barWidth }} />
