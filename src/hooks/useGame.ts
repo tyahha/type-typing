@@ -114,7 +114,6 @@ export const useGame = () => {
     endTime,
     setEndTime,
     problems,
-    currentProbrem: problem,
     misses,
     addMiss,
     countDownCount: count,

@@ -1,22 +1,13 @@
 import React from "react";
 import style from "./App.module.scss";
-import { KeyBoardContainer } from "./container/KeyBoardContainer";
-import { Hands } from "./component/hands";
-import { StringDisplay } from "./component/string-display";
-import { ImgFrame } from "./component/img-frame";
 import { Mode } from "./model/Mode";
-import titleImgSrc from "./assets/title.png";
-import countDown1ImgSrc from "./assets/count-down-1.jpeg";
-import countDown2ImgSrc from "./assets/count-down-2.jpeg";
-import countDown3ImgSrc from "./assets/count-down-3.jpeg";
-import {
-  WaitForStartStringDisplay,
-  CountDownStringDisplay
-} from "./component/string-display/StringDisplay";
 import { ResultDisplay } from "./component/result-display/resultDisplay";
 import { useGame } from "./hooks/useGame";
+import { WaitStartDisplayContainer } from "./container/WaitStartDisplayContainer";
+import { TypingDisplayContainer } from "./container/TypingDisplayContainer";
+import { CountDownDisplayContainer } from "./container/CountDownDisplayContainer";
 
-const App: React.FC = () => {
+const App = () => {
   const {
     mode,
     problems,
@@ -24,7 +15,6 @@ const App: React.FC = () => {
     endTime,
     misses,
     countDownCount,
-    currentProbrem,
     nextChar,
     inputedCountOfCurrentProblem,
     problemIndex
@@ -33,7 +23,17 @@ const App: React.FC = () => {
   return (
     <main className={style.main}>
       <div className={style.app}>
-        {mode === Mode.End ? (
+        {mode === Mode.WaitStart ? (
+          <WaitStartDisplayContainer nextChar={nextChar} />
+        ) : mode === Mode.CountDown ? (
+          <CountDownDisplayContainer countDownCount={countDownCount} />
+        ) : mode === Mode.Typing ? (
+          <TypingDisplayContainer
+            inputedCountOfCurrentProblem={inputedCountOfCurrentProblem}
+            problems={problems}
+            problemIndex={problemIndex}
+          />
+        ) : mode === Mode.End ? (
           <ResultDisplay
             problems={problems}
             startTime={startTime}
@@ -41,36 +41,7 @@ const App: React.FC = () => {
             missedKeyAndNumbers={misses}
           />
         ) : (
-          <>
-            <ImgFrame
-              imgUrl={
-                mode === Mode.WaitStart
-                  ? titleImgSrc
-                  : mode === Mode.CountDown && countDownCount === 3
-                  ? countDown3ImgSrc
-                  : mode === Mode.CountDown && countDownCount === 2
-                  ? countDown2ImgSrc
-                  : mode === Mode.CountDown && countDownCount === 1
-                  ? countDown1ImgSrc
-                  : currentProbrem.img
-              }
-            />
-            {mode === Mode.WaitStart ? (
-              <WaitForStartStringDisplay />
-            ) : mode === Mode.CountDown ? (
-              <CountDownStringDisplay count={countDownCount} />
-            ) : (
-              <StringDisplay
-                inputedCountOfCurrentProblem={inputedCountOfCurrentProblem}
-                problems={problems}
-                problemIndex={problemIndex}
-              />
-            )}
-            <KeyBoardContainer nextChar={nextChar} />
-            <div className={style.handsAjust}>
-              <Hands nextChar={nextChar} />
-            </div>
-          </>
+          <>Unknown Mode !!! [{mode}]</>
         )}
       </div>
     </main>

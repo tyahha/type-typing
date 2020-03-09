@@ -7,10 +7,4 @@ export const KeyContainer = ({
 }: {
   char?: string;
   nextChar: string;
-}) => {
-  return char == null ? (
-    <KeyButton />
-  ) : (
-    <KeyButton highLight={char === nextChar}>{char}</KeyButton>
-  );
-};
+}) => <KeyButton highLight={char === nextChar}>{char ?? ""}</KeyButton>;
