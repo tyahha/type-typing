@@ -1,4 +1,5 @@
 import { Problem } from "../model/problem";
+import gontaImgSrc from "./gonta.jpg";
 
 export const problems: Problem[] = [
   {
@@ -58,5 +59,11 @@ export const problems: Problem[] = [
     main: "心を燃やせ",
     kana: "こころをもやせ",
     alphabet: "KOKOROWOMOYASE"
+  },
+  {
+    img: gontaImgSrc,
+    main: "佐藤ゴン太",
+    kana: "さとうごんた",
+    alphabet: "SATOUGONTA"
   }
 ];
