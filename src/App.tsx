@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import style from "./App.module.scss";
 import { TypingContextProvider } from "./TypingContextProvider";
 import { ModeSwitcherContainer } from "./container/ModeSwicherContainer";

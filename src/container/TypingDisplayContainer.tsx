@@ -1,7 +1,6 @@
 import React from "react";
 import { ImgFrame } from "../component/img-frame";
 import { StringDisplay } from "../component/string-display";
-import { Problem } from "../model/problem";
 import { KeyBoardContainer } from "./KeyBoardContainer";
 import { Hands } from "../component/hands";
 import { useTypingContext } from "../hooks/useTypingContext";

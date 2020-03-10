@@ -1,7 +1,6 @@
 import React, { createContext } from "react";
 import { Problem } from "./model/problem";
 import { Mode } from "./model/Mode";
-import { TypingDisplayContainer } from "./container/TypingDisplayContainer";
 import { useGame } from "./hooks/useGame";
 
 export const TypingContext = createContext<{
