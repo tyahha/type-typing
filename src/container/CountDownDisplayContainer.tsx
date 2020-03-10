@@ -6,12 +6,11 @@ import countDown3ImgSrc from "../assets/count-down-3.jpeg";
 import { KeyBoardContainer } from "./KeyBoardContainer";
 import { Hands } from "../component/hands";
 import { CountDownStringDisplay } from "../component/string-display/StringDisplay";
+import { useTypingContext } from "../hooks/useTypingContext";
 
-export const CountDownDisplayContainer = ({
-  countDownCount
-}: {
-  countDownCount: number;
-}) => {
+export const CountDownDisplayContainer = () => {
+  const { countDownCount } = useTypingContext();
+
   const imgUrl =
     countDownCount === 3
       ? countDown3ImgSrc
@@ -20,6 +19,7 @@ export const CountDownDisplayContainer = ({
       : countDownCount === 1
       ? countDown1ImgSrc
       : "";
+
   return (
     <>
       <ImgFrame imgUrl={imgUrl} />

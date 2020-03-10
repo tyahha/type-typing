@@ -4,18 +4,16 @@ import { StringDisplay } from "../component/string-display";
 import { Problem } from "../model/problem";
 import { KeyBoardContainer } from "./KeyBoardContainer";
 import { Hands } from "../component/hands";
+import { useTypingContext } from "../hooks/useTypingContext";
 
-export const TypingDisplayContainer = ({
-  inputedCountOfCurrentProblem,
-  problems,
-  problemIndex
-}: {
-  inputedCountOfCurrentProblem: number;
-  problems: Problem[];
-  problemIndex: number;
-}) => {
+export const TypingDisplayContainer = () => {
+  const {
+    inputedCountOfCurrentProblem,
+    problems,
+    problemIndex,
+    nextChar
+  } = useTypingContext();
   const problem = problems[problemIndex];
-  const nextChar = problem.alphabet[inputedCountOfCurrentProblem];
   return (
     <>
       <ImgFrame imgUrl={problem.img} />

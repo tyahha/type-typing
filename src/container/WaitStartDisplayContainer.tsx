@@ -4,16 +4,16 @@ import titleImgSrc from "../assets/title.png";
 import { WaitForStartStringDisplay } from "../component/string-display/StringDisplay";
 import { KeyBoardContainer } from "./KeyBoardContainer";
 import { Hands } from "../component/hands";
+import { useTypingContext } from "../hooks/useTypingContext";
 
-export const WaitStartDisplayContainer = ({
-  nextChar
-}: {
-  nextChar: string;
-}) => (
-  <>
-    <ImgFrame imgUrl={titleImgSrc} />
-    <WaitForStartStringDisplay />
-    <KeyBoardContainer nextChar={nextChar} />
-    <Hands nextChar={nextChar} />
-  </>
-);
+export const WaitStartDisplayContainer = () => {
+  const { nextChar } = useTypingContext();
+  return (
+    <>
+      <ImgFrame imgUrl={titleImgSrc} />
+      <WaitForStartStringDisplay />
+      <KeyBoardContainer nextChar={nextChar} />
+      <Hands nextChar={nextChar} />
+    </>
+  );
+};
