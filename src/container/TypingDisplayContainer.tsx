@@ -2,7 +2,7 @@ import React from "react";
 import { ImgFrame } from "../component/img-frame";
 import { StringDisplay } from "../component/string-display";
 import { KeyBoardContainer } from "./KeyBoardContainer";
-import { Hands } from "../component/hands";
+import { Hands } from "../component/Hands";
 import { useTypingContext } from "../hooks/useTypingContext";
 
 export const TypingDisplayContainer = () => {

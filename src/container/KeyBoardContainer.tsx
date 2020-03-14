@@ -1,6 +1,5 @@
 import React from "react";
-
-import style from "../App.module.scss";
+import { css } from "emotion";
 
 import { KeyLine } from "../component/key-line";
 import { KeyButton } from "../component/key-button";
@@ -25,7 +24,14 @@ export const containKeyLines = (c: string): boolean =>
 
 export const KeyBoardContainer = ({ nextChar }: { nextChar: string }) => {
   return (
-    <div className={style.keyLineContainer}>
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 260px;
+      `}
+    >
       <KeyLine>
         <KeyButton />
         {line1Keys.map(c => (

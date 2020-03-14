@@ -4,7 +4,7 @@ import countDown1ImgSrc from "../assets/count-down-1.jpeg";
 import countDown2ImgSrc from "../assets/count-down-2.jpeg";
 import countDown3ImgSrc from "../assets/count-down-3.jpeg";
 import { KeyBoardContainer } from "./KeyBoardContainer";
-import { Hands } from "../component/hands";
+import { Hands } from "../component/Hands";
 import { CountDownStringDisplay } from "../component/string-display/StringDisplay";
 import { useTypingContext } from "../hooks/useTypingContext";
 

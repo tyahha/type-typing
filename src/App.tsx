@@ -2,7 +2,7 @@ import React from "react";
 import { TypingContextProvider } from "./TypingContextProvider";
 import { ModeSwitcherContainer } from "./container/ModeSwicherContainer";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 const FullDisplay = styled.main`
   width: 100vw;

@@ -3,7 +3,7 @@ import { ImgFrame } from "../component/img-frame";
 import titleImgSrc from "../assets/title.png";
 import { WaitForStartStringDisplay } from "../component/string-display/StringDisplay";
 import { KeyBoardContainer } from "./KeyBoardContainer";
-import { Hands } from "../component/hands";
+import { Hands } from "../component/Hands";
 import { useTypingContext } from "../hooks/useTypingContext";
 
 export const WaitStartDisplayContainer = () => {
