@@ -1,11 +1,11 @@
 import React from "react";
-import { ImgFrame } from "../component/img-frame";
-import { StringDisplay } from "../component/string-display";
-import { KeyBoardContainer } from "./KeyBoardContainer";
-import { Hands } from "../component/Hands";
-import { useTypingContext } from "../hooks/useTypingContext";
+import { ImgFrame } from "./view-part/ImgFrame";
+import { ProblemStringDisplay } from "./view-part/string-display/ProblemStringDisplay";
+import { KeyBoard } from "./view-part/KeyBoard";
+import { Hands } from "./view-part/Hands";
+import { useTypingContext } from "../../hooks/useTypingContext";
 
-export const TypingDisplayContainer = () => {
+export const TypingModeView = () => {
   const {
     inputedCountOfCurrentProblem,
     problems,
@@ -16,12 +16,12 @@ export const TypingDisplayContainer = () => {
   return (
     <>
       <ImgFrame imgUrl={problem.img} />
-      <StringDisplay
+      <ProblemStringDisplay
         inputedCountOfCurrentProblem={inputedCountOfCurrentProblem}
         problems={problems}
         problemIndex={problemIndex}
       />
-      <KeyBoardContainer nextChar={nextChar} />
+      <KeyBoard nextChar={nextChar} />
       <Hands nextChar={nextChar} />
     </>
   );

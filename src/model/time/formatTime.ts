@@ -1,4 +1,4 @@
-import { Time } from "../model/Time";
+import { Time } from ".";
 
 export const formatTime = (time: Time): string =>
   `${time.hour ? `${time.hour}時間` : ""}${

@@ -1,4 +1,4 @@
-import { Time } from "../model/Time";
+import { Time } from ".";
 
 const aSecond = 1000;
 const aMinite = aSecond * 60;

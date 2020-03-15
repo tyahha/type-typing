@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useProblems } from "./useProblems";
 import { useMiss } from "./useMiss";
 import { Mode } from "../model/Mode";
-import { containKeyLines } from "../container/KeyBoardContainer";
+import { containKeyLines } from "../model/Keys";
 import { hazureSound } from "../assets/hazureSound";
 
 export const useGame = () => {
@@ -54,7 +54,7 @@ export const useGame = () => {
           resetMisses();
           setMode(Mode.CountDown);
         }
-      } else if (mode === Mode.End) {
+      } else if (mode === Mode.Result) {
         const inputKey = e.key.toUpperCase();
         if (inputKey === "R") {
           setCount(3);
@@ -81,7 +81,7 @@ export const useGame = () => {
                 setProblemIndex(nextProblemIndex);
               } else {
                 setEndTime(new Date().getTime());
-                setMode(Mode.End);
+                setMode(Mode.Result);
               }
             }
           }

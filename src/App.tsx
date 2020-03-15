@@ -1,8 +1,20 @@
 import React from "react";
 import { TypingContextProvider } from "./TypingContextProvider";
-import { ModeSwitcherContainer } from "./container/ModeSwicherContainer";
+import { ViewSwitcher } from "./component/ViewSwicher";
 
 import styled from "@emotion/styled";
+
+export const App = () => {
+  return (
+    <TypingContextProvider>
+      <FullDisplay>
+        <GameDisplay>
+          <ViewSwitcher />
+        </GameDisplay>
+      </FullDisplay>
+    </TypingContextProvider>
+  );
+};
 
 const FullDisplay = styled.main`
   width: 100vw;
@@ -19,17 +31,3 @@ const GameDisplay = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-const App = () => {
-  return (
-    <TypingContextProvider>
-      <FullDisplay>
-        <GameDisplay>
-          <ModeSwitcherContainer />
-        </GameDisplay>
-      </FullDisplay>
-    </TypingContextProvider>
-  );
-};
-
-export default App;

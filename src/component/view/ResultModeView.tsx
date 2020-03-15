@@ -1,11 +1,12 @@
 import React from "react";
-import classNames from "classnames";
-import style from "./result-display.module.scss";
-import { formatTime } from "../../logic/formatTime";
-import { diffTime } from "../../logic/diffTime";
+import styled from "@emotion/styled";
+import { css } from "emotion";
+
+import { formatTime } from "../../model/time";
+import { diffTime } from "../../model/time";
 import { useTypingContext } from "../../hooks/useTypingContext";
 
-export const ResultDisplay = () => {
+export const ResultModeView = () => {
   const { problems, startTime, endTime, misses } = useTypingContext();
 
   const missStrings = [...misses]
@@ -24,8 +25,23 @@ export const ResultDisplay = () => {
   );
 
   return (
-    <div className={classNames(style.resultDisplayFrame, style.result)}>
-      <div className={style.resultDisplay}>
+    <div
+      className={css`
+        width: 100%;
+        height: 100%;
+      `}
+    >
+      <div
+        className={css`
+          margin: 5px;
+          height: calc(100% - 20px);
+          padding: 0;
+          border-color: rgb(55, 55, 65);
+          border-style: solid;
+          border-width: 1px;
+          background-color: #c1bdeb;
+        `}
+      >
         <ResultItemList
           items={[
             ["入力時間", formatTime(diffTime(startTime, endTime))],
@@ -46,14 +62,27 @@ export const ResultDisplay = () => {
             ["ミスしやすいキー", missStrings.join(", ")]
           ]}
         />
-        <p className={style.retry}>(Rキーでもう一回)</p>
+        <p
+          className={css`
+            margin: auto;
+            text-align: center;
+          `}
+        >
+          (Rキーでもう一回)
+        </p>
       </div>
     </div>
   );
 };
 
 const ResultItemList = (props: { items: [string, string][] }) => (
-  <ul>
+  <ul
+    className={css`
+      width: 60%;
+      margin: 0 auto;
+      padding: 0;
+    `}
+  >
     {props.items.map((item, index) => (
       <ResultItem key={index} name={item[0]} value={item[1]} />
     ))}
@@ -61,8 +90,28 @@ const ResultItemList = (props: { items: [string, string][] }) => (
 );
 
 const ResultItem = (props: { name: string; value: string }) => (
-  <li>
-    <div>{props.name}</div>
-    <div className={style.data}>{props.value}</div>
+  <li
+    className={css`
+      list-style: none;
+      border-width: 1px;
+      border-bottom: solid;
+    `}
+  >
+    <ResultItemData>{props.name}</ResultItemData>
+    <ResultItemData
+      className={css`
+        text-align: center;
+        width: 15em;
+        font-weight: bold;
+      `}
+    >
+      {props.value}
+    </ResultItemData>
   </li>
 );
+
+const ResultItemData = styled.div`
+  margin: 10px 0 0 10px;
+  display: inline-block;
+  width: 10em;
+`;
