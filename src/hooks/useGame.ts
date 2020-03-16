@@ -4,6 +4,7 @@ import { useMiss } from "./useMiss";
 import { Mode } from "../model/Mode";
 import { containKeyLines } from "../model/Keys";
 import { hazureSound } from "../assets/hazureSound";
+import { useMissObservable } from "./useMissObservable";
 
 export const useGame = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -17,6 +18,7 @@ export const useGame = () => {
     problemIndex
   ]);
   const { misses, addMiss, resetMisses } = useMiss();
+  const missObservable = useMissObservable();
 
   const [inputedCount, setInputedCount] = useState(0);
   const nextChar = useMemo(() => {
@@ -70,6 +72,7 @@ export const useGame = () => {
             hazureSound.currentTime = 0;
             hazureSound.play();
             addMiss(nextChar);
+            missObservable.publishMiss();
           } else {
             const nextInputedCount = inputedCount + 1;
             if (nextInputedCount < problem.alphabet.length) {
@@ -103,7 +106,8 @@ export const useGame = () => {
     problems.length,
     shuffleProblems,
     addMiss,
-    resetMisses
+    resetMisses,
+    missObservable
   ]);
 
   return {
@@ -119,6 +123,7 @@ export const useGame = () => {
     countDownCount: count,
     nextChar,
     inputedCountOfCurrentProblem: inputedCount,
-    problemIndex
+    problemIndex,
+    ...missObservable
   };
 };
