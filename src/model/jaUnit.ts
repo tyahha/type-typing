@@ -21,6 +21,10 @@ export const SingleJaInputs: JaInput[] = [
     keys: ["E"]
   },
   {
+    kana: "お",
+    keys: ["O"]
+  },
+  {
     kana: "か",
     keys: ["KA", "CA"]
   },
@@ -30,7 +34,7 @@ export const SingleJaInputs: JaInput[] = [
   },
   {
     kana: "く",
-    keys: ["KU", "CU"]
+    keys: ["KU", "CU", "QU"]
   },
   {
     kana: "け",
@@ -325,5 +329,412 @@ export const SingleJaInputs: JaInput[] = [
   {
     kana: "ぃ",
     keys: ["LI", "XI"]
+  },
+  {
+    kana: "ヴ",
+    keys: ["VU"]
+  }
+];
+
+export const MultiJaImputs: JaInput[] = [
+  {
+    kana: "きゃ",
+    keys: ["KYA"]
+  },
+  {
+    kana: "きゅ",
+    keys: ["KYU"]
+  },
+  {
+    kana: "きょ",
+    keys: ["KYO"]
+  },
+  {
+    kana: "ぎゃ",
+    keys: ["GYA"]
+  },
+  {
+    kana: "ぎぃ",
+    keys: ["GYI"]
+  },
+  {
+    kana: "ぎゅ",
+    keys: ["GYU"]
+  },
+  {
+    kana: "ぎぇ",
+    keys: ["GYE"]
+  },
+  {
+    kana: "ぎょ",
+    keys: ["GYO"]
+  },
+  {
+    kana: "しゃ",
+    keys: ["SHA", "SYA"]
+  },
+  {
+    kana: "しぃ",
+    keys: ["SYI"]
+  },
+  {
+    kana: "しゅ",
+    keys: ["SHU", "SYU"]
+  },
+  {
+    kana: "しぇ",
+    keys: ["SHE", "SYE"]
+  },
+  {
+    kana: "しょ",
+    keys: ["SHO", "SYO"]
+  },
+  {
+    kana: "じゃ",
+    keys: ["JA", "ZYA", "JYA"]
+  },
+  {
+    kana: "じぃ",
+    keys: ["ZYI", "JYI"]
+  },
+  {
+    kana: "じゅ",
+    keys: ["JU", "ZYU", "JYU"]
+  },
+  {
+    kana: "じぇ",
+    keys: ["JE", "ZYE", "JYE"]
+  },
+  {
+    kana: "じょ",
+    keys: ["JO", "ZYO", "JYO"]
+  },
+  {
+    kana: "ちゃ",
+    keys: ["TYA", "CHA", "CYA"]
+  },
+  {
+    kana: "ちぃ",
+    keys: ["TYI", "CYI"]
+  },
+  {
+    kana: "てぃ",
+    keys: ["THI"]
+  },
+  {
+    kana: "ちゅ",
+    keys: ["TYU", "CHU", "CYU"]
+  },
+  {
+    kana: "てゅ",
+    keys: ["THU"]
+  },
+  {
+    kana: "ちぇ",
+    keys: ["TYE", "CHE", "CYE"]
+  },
+  {
+    kana: "ちょ",
+    keys: ["TYO", "CHO", "CYO"]
+  },
+  {
+    kana: "ぢゃ",
+    keys: ["DYA"]
+  },
+  {
+    kana: "ぢぃ",
+    keys: ["DYI"]
+  },
+  {
+    kana: "でぃ",
+    keys: ["DHI"]
+  },
+  {
+    kana: "ぢゅ",
+    keys: ["ぢ"]
+  },
+  {
+    kana: "でゅ",
+    keys: ["DHU"]
+  },
+  {
+    kana: "ぢぇ",
+    keys: ["DYE"]
+  },
+  {
+    kana: "でぇ",
+    keys: ["DHE"]
+  },
+  {
+    kana: "ぢょ",
+    keys: ["DYO"]
+  },
+  {
+    kana: "でょ",
+    keys: ["DHO"]
+  },
+  {
+    kana: "にゃ",
+    keys: ["NYA"]
+  },
+  {
+    kana: "にぃ",
+    keys: ["NYI"]
+  },
+  {
+    kana: "にゅ",
+    keys: ["NYU"]
+  },
+  {
+    kana: "にぇ",
+    keys: ["NYE"]
+  },
+  {
+    kana: "にょ",
+    keys: ["NYO"]
+  },
+  {
+    kana: "ひゃ",
+    keys: ["HYA"]
+  },
+  {
+    kana: "ひぃ",
+    keys: ["HYI"]
+  },
+  {
+    kana: "ひゅ",
+    keys: ["HYU"]
+  },
+  {
+    kana: "ひぇ",
+    keys: ["HYE"]
+  },
+  {
+    kana: "ひょ",
+    keys: ["HYO"]
+  },
+  {
+    kana: "びゃ",
+    keys: ["BYA"]
+  },
+  {
+    kana: "びぃ",
+    keys: ["BYI"]
+  },
+  {
+    kana: "びゅ",
+    keys: ["びゅ"]
+  },
+  {
+    kana: "びぇ",
+    keys: ["BYE"]
+  },
+  {
+    kana: "びょ",
+    keys: ["BYO"]
+  },
+  {
+    kana: "ぴゃ",
+    keys: ["PYA"]
+  },
+  {
+    kana: "ぴぃ",
+    keys: ["PYI"]
+  },
+  {
+    kana: "ぴゅ",
+    keys: ["PYU"]
+  },
+  {
+    kana: "ぴぇ",
+    keys: ["PYE"]
+  },
+  {
+    kana: "ぴょ",
+    keys: ["PYO"]
+  },
+  {
+    kana: "みゃ",
+    keys: ["MYA"]
+  },
+  {
+    kana: "みぃ",
+    keys: ["MYI"]
+  },
+  {
+    kana: "みゅ",
+    keys: ["MYU"]
+  },
+  {
+    kana: "みぇ",
+    keys: ["MYE"]
+  },
+  {
+    kana: "みょ",
+    keys: ["MYO"]
+  },
+  {
+    kana: "りゃ",
+    keys: ["RYA"]
+  },
+  {
+    kana: "りぃ",
+    keys: ["RYI"]
+  },
+  {
+    kana: "りゅ",
+    keys: ["RYU"]
+  },
+  {
+    kana: "りぇ",
+    keys: ["RYE"]
+  },
+  {
+    kana: "りょ",
+    keys: ["RYO"]
+  },
+  {
+    kana: "つぁ",
+    keys: ["TSA"]
+  },
+  {
+    kana: "つぃ",
+    keys: ["TSI"]
+  },
+  {
+    kana: "つぇ",
+    keys: ["TSE"]
+  },
+  {
+    kana: "つぉ",
+    keys: ["TSO"]
+  },
+  {
+    kana: "ふぁ",
+    keys: ["FA"]
+  },
+  {
+    kana: "ふぃ",
+    keys: ["FI"]
+  },
+  {
+    kana: "ふぇ",
+    keys: ["FE"]
+  },
+  {
+    kana: "ふぉ",
+    keys: ["FO"]
+  },
+  {
+    kana: "いぇ",
+    keys: ["YE"]
+  },
+  {
+    kana: "うぃ",
+    keys: ["WI", "WHI"]
+  },
+  {
+    kana: "うぇ",
+    keys: ["WE", "WHE"]
+  },
+  {
+    kana: "うぉ",
+    keys: ["WHO"]
+  },
+  {
+    kana: "ヴぁ",
+    keys: ["VA"]
+  },
+  {
+    kana: "ヴぃ",
+    keys: ["VI", "VYI"]
+  },
+  {
+    kana: "ヴぇ",
+    keys: ["VE", "VYE"]
+  },
+  {
+    kana: "ヴぉ",
+    keys: ["VO"]
+  },
+  {
+    kana: "ヴゃ",
+    keys: ["VYA"]
+  },
+  {
+    kana: "ヴゅ",
+    keys: ["VYU"]
+  },
+  {
+    kana: "ヴょ",
+    keys: ["VYO"]
+  },
+  {
+    kana: "くぁ",
+    keys: ["QA"]
+  },
+  {
+    kana: "くぃ",
+    keys: ["QI", "QYI"]
+  },
+  {
+    kana: "くぇ",
+    keys: ["QE", "QYE"]
+  },
+  {
+    kana: "くぉ",
+    keys: ["QO"]
+  },
+  {
+    kana: "くゃ",
+    keys: ["QYA"]
+  },
+  {
+    kana: "くゅ",
+    keys: ["QYU"]
+  },
+  {
+    kana: "くょ",
+    keys: ["QYO"]
+  },
+  {
+    kana: "とぁ",
+    keys: ["TWA"]
+  },
+  {
+    kana: "とぃ",
+    keys: ["TWI"]
+  },
+  {
+    kana: "とぅ",
+    keys: ["TWU"]
+  },
+  {
+    kana: "とぇ",
+    keys: ["TWE"]
+  },
+  {
+    kana: "とぉ",
+    keys: ["TWO"]
+  },
+  {
+    kana: "ふゃ",
+    keys: ["FYA"]
+  },
+  {
+    kana: "ふぃ",
+    keys: ["FYI"]
+  },
+  {
+    kana: "ふゅ",
+    keys: ["FYU"]
+  },
+  {
+    kana: "ふぇ",
+    keys: ["FYE"]
+  },
+  {
+    kana: "ふょ",
+    keys: ["FYO"]
   }
 ];
