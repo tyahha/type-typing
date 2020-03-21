@@ -167,7 +167,6 @@ export const SingleJaInputs: JaInput[] = [
   {
     kana: "ん",
     keys: ["NN"]
-    // Nを2回押さなくてもいいルールをどうするか
   },
   {
     kana: "が",
@@ -321,6 +320,10 @@ export const SingleJaInputs: JaInput[] = [
   {
     kana: "ゅ",
     keys: ["LYU", "XYU"]
+  },
+  {
+    kana: "ょ",
+    keys: ["LYO", "XYO"]
   },
   {
     kana: "ゎ",
