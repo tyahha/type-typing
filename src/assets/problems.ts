@@ -44,7 +44,7 @@ export const problems: Problem[] = [
   {
     img: "https://i.ytimg.com/vi/j5zpWCBbhD0/maxresdefault.jpg",
     main: "炎柱 煉獄杏寿郎",
-    kana: "えんばんしられんごくきょうじゅろう",
+    kana: "えんばしられんごくきょうじゅろう",
     alphabet: "ENBASIRARENGOKUKYOUJUROU"
   },
   {
