@@ -7,17 +7,13 @@ export const createResult = (
   startTime: number,
   endTime: number,
   problems: Problem[],
-  misses: Map<string, number>
+  misses: Map<string, number>,
+  allInputKeyCount: number
 ): ResultItem[] => {
   const missStrings = [...misses]
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
     .map(([s, num]) => `${s}(${num}回)`);
-
-  const allInputKeyCount = problems.reduce(
-    (acc, c) => acc + c.alphabet.length,
-    0
-  );
 
   const allMissTypeCount = Array.from(misses.values()).reduce(
     (acc, c) => acc + c,

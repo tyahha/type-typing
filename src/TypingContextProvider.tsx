@@ -13,8 +13,10 @@ export const TypingContext = createContext<
     misses: Map<string, number>;
     countDownCount: number;
     nextChar: string;
-    inputedCountOfCurrentProblem: number;
+    inputedKeysOfCurrentProblem: string;
     problemIndex: number;
+    keysCandidate: string;
+    allInputedCount: number;
   } & Pick<
     ReturnType<typeof useMissObservable>,
     "addMissObserver" | "removeMissObserver"
@@ -27,8 +29,10 @@ export const TypingContext = createContext<
   misses: new Map(),
   countDownCount: 0,
   nextChar: "",
-  inputedCountOfCurrentProblem: 0,
+  inputedKeysOfCurrentProblem: "",
   problemIndex: 0,
+  keysCandidate: "",
+  allInputedCount: 0,
   addMissObserver: () => {},
   removeMissObserver: () => {}
 });

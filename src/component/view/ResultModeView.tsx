@@ -6,8 +6,20 @@ import { createResult, ResultItem } from "../../model/result";
 import { useTypingContext } from "../../hooks/useTypingContext";
 
 export const ResultModeView = () => {
-  const { problems, startTime, endTime, misses } = useTypingContext();
-  const resultItems = createResult(startTime, endTime, problems, misses);
+  const {
+    problems,
+    startTime,
+    endTime,
+    misses,
+    allInputedCount
+  } = useTypingContext();
+  const resultItems = createResult(
+    startTime,
+    endTime,
+    problems,
+    misses,
+    allInputedCount
+  );
 
   return (
     <ResultFrame>

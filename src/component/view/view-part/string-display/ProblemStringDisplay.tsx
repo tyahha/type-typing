@@ -18,9 +18,10 @@ const flashKeyflame = keyframes`
 `;
 
 export const ProblemStringDisplay = (props: {
-  inputedCountOfCurrentProblem: number;
+  inputedKeysOfCurrentProblem: string;
   problems: Problem[];
   problemIndex: number;
+  keysCandidate: string;
 }) => {
   const { addMissObserver, removeMissObserver } = useTypingContext();
   const [animate, setAnimate] = useState(false);
@@ -66,11 +67,11 @@ export const ProblemStringDisplay = (props: {
         <StringContainer>{problem.main}</StringContainer>
         <HiraganaContainer>{problem.kana}</HiraganaContainer>
         <StringContainer>
-          {problem.alphabet.split("").map((c, i) => (
+          {props.keysCandidate.split("").map((c, i) => (
             <Alphabet
               key={i}
               char={c}
-              inputed={i < props.inputedCountOfCurrentProblem}
+              inputed={i < props.inputedKeysOfCurrentProblem.length}
             />
           ))}
         </StringContainer>

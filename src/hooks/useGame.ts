@@ -5,11 +5,13 @@ import { Mode } from "../model/Mode";
 import { containKeyLines } from "../model/Keys";
 import { hazureSound } from "../assets/hazureSound";
 import { useMissObservable } from "./useMissObservable";
+import { getAlphabets } from "../model/getAlphabets";
 
 export const useGame = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
   const [startTime, setStartTime] = useState(new Date().getTime());
   const [endTime, setEndTime] = useState(new Date().getTime());
+  const [allInputedCount, setAllInputedCount] = useState(0);
 
   const { problems, shuffleProblems } = useProblems();
   const [problemIndex, setProblemIndex] = useState(0);
@@ -17,20 +19,27 @@ export const useGame = () => {
     problems,
     problemIndex
   ]);
+
+  const keysCandidates = useMemo(() => getAlphabets(problem.kana), [problem]);
+  const [inputedKeys, setInputedKeys] = useState("");
+  const primaryKeys = useMemo(
+    () => keysCandidates.filter(e => e.indexOf(inputedKeys) === 0)[0],
+    [keysCandidates, inputedKeys]
+  );
+
   const { misses, addMiss, resetMisses } = useMiss();
   const missObservable = useMissObservable();
 
-  const [inputedCount, setInputedCount] = useState(0);
   const nextChar = useMemo(() => {
     switch (mode) {
       case Mode.WaitStart:
         return "space";
       case Mode.Typing:
-        return problem.alphabet[inputedCount];
+        return primaryKeys[inputedKeys.length];
       default:
         return "";
     }
-  }, [mode, problem, inputedCount]);
+  }, [mode, inputedKeys, primaryKeys]);
 
   const [count, setCount] = useState(3);
   useEffect(() => {
@@ -60,27 +69,32 @@ export const useGame = () => {
         const inputKey = e.key.toUpperCase();
         if (inputKey === "R") {
           setCount(3);
-          setInputedCount(0);
+          setInputedKeys("");
           setProblemIndex(0);
+          setAllInputedCount(0);
           setMode(Mode.WaitStart);
         }
       } else if (mode === Mode.Typing) {
         const inputKey = e.key.toUpperCase();
         if (containKeyLines(inputKey)) {
-          if (inputKey !== nextChar) {
+          const newInputedKeys = inputedKeys + inputKey;
+          const newKeysCandidate = keysCandidates.filter(
+            e => e.indexOf(newInputedKeys) === 0
+          );
+          if (newKeysCandidate.length <= 0) {
             hazureSound.pause();
             hazureSound.currentTime = 0;
             hazureSound.play();
             addMiss(nextChar);
             missObservable.publishMiss();
           } else {
-            const nextInputedCount = inputedCount + 1;
-            if (nextInputedCount < problem.alphabet.length) {
-              setInputedCount(inputedCount + 1);
+            setAllInputedCount(allInputedCount + 1);
+            if (newInputedKeys !== newKeysCandidate[0]) {
+              setInputedKeys(newInputedKeys);
             } else {
               const nextProblemIndex = problemIndex + 1;
               if (nextProblemIndex < problems.length) {
-                setInputedCount(0);
+                setInputedKeys("");
                 setProblemIndex(nextProblemIndex);
               } else {
                 setEndTime(new Date().getTime());
@@ -100,14 +114,15 @@ export const useGame = () => {
   }, [
     mode,
     nextChar,
-    inputedCount,
-    problem.alphabet.length,
+    inputedKeys,
     problemIndex,
     problems.length,
     shuffleProblems,
     addMiss,
     resetMisses,
-    missObservable
+    keysCandidates,
+    missObservable,
+    allInputedCount
   ]);
 
   return {
@@ -122,8 +137,10 @@ export const useGame = () => {
     addMiss,
     countDownCount: count,
     nextChar,
-    inputedCountOfCurrentProblem: inputedCount,
+    inputedKeysOfCurrentProblem: inputedKeys,
     problemIndex,
+    keysCandidate: primaryKeys,
+    allInputedCount,
     ...missObservable
   };
 };

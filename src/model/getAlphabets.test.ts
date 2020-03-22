@@ -2,7 +2,7 @@ import { getAlphabets } from "./getAlphabets";
 
 describe("getAlphabet", () => {
   test("あいうえお", () => {
-    expect(getAlphabets("あいうえお")).toStrictEqual(["AIUEO"]);
+    expect(getAlphabets("ここここ")).toStrictEqual(["AIUEO"]);
   });
   test("ねんぶつ", () => {
     expect(getAlphabets("ねんぶつ")).toStrictEqual([

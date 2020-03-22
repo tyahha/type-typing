@@ -157,6 +157,26 @@ export const SingleJaInputs: JaInput[] = [
     keys: ["YO"]
   },
   {
+    kana: "ら",
+    keys: ["RA"]
+  },
+  {
+    kana: "り",
+    keys: ["RI"]
+  },
+  {
+    kana: "る",
+    keys: ["RU"]
+  },
+  {
+    kana: "れ",
+    keys: ["RE"]
+  },
+  {
+    kana: "ろ",
+    keys: ["RO"]
+  },
+  {
     kana: "わ",
     keys: ["WA"]
   },
