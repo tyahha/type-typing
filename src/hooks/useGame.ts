@@ -5,6 +5,13 @@ import { Mode } from "../model/Mode";
 import { containKeyLines } from "../model/Keys";
 import { hazureSound } from "../assets/hazureSound";
 import { useMissObservable } from "./useMissObservable";
+import { getJaUnitCandidates } from "../model/getJaUnitCandidates";
+import { getKeys } from "../model/getKeys";
+
+export interface InputedKana {
+  kana: string;
+  key: string;
+}
 
 export const useGame = () => {
   const [mode, setMode] = useState(Mode.WaitStart);
@@ -17,20 +24,43 @@ export const useGame = () => {
     problems,
     problemIndex
   ]);
+  const [completeProblemInputs, setCompleteProblemInputs] = useState<string[]>(
+    []
+  );
   const { misses, addMiss, resetMisses } = useMiss();
   const missObservable = useMissObservable();
 
-  const [inputedCount, setInputedCount] = useState(0);
+  const [inputedKanas, setInputedKanas] = useState<InputedKana[]>([]);
+  const [inputedKeys, setInputedKeys] = useState("");
+
+  const remainKanas = useMemo(() => {
+    const allInputedKanaLength = inputedKanas.reduce(
+      (acc, c) => acc + c.kana.length,
+      0
+    );
+    return problem.kana.slice(allInputedKanaLength);
+  }, [problem, inputedKanas]);
+
+  const [nextJaUnitCandidates, remainKeys] = useMemo(
+    () => [
+      getJaUnitCandidates(remainKanas, inputedKeys),
+      getKeys(remainKanas, inputedKeys)
+    ],
+    [remainKanas, inputedKeys]
+  );
+
   const nextChar = useMemo(() => {
     switch (mode) {
       case Mode.WaitStart:
         return "space";
       case Mode.Typing:
-        return problem.alphabet[inputedCount];
+        return nextJaUnitCandidates[0].keys.filter(k =>
+          k.startsWith(inputedKeys)
+        )[0][inputedKeys.length];
       default:
         return "";
     }
-  }, [mode, problem, inputedCount]);
+  }, [mode, nextJaUnitCandidates, inputedKeys]);
 
   const [count, setCount] = useState(3);
   useEffect(() => {
@@ -54,37 +84,68 @@ export const useGame = () => {
         if (e.key === " ") {
           shuffleProblems();
           resetMisses();
+          setCompleteProblemInputs([]);
           setMode(Mode.CountDown);
         }
       } else if (mode === Mode.Result) {
         const inputKey = e.key.toUpperCase();
         if (inputKey === "R") {
           setCount(3);
-          setInputedCount(0);
+          setInputedKanas([]);
+          setInputedKeys("");
           setProblemIndex(0);
           setMode(Mode.WaitStart);
         }
       } else if (mode === Mode.Typing) {
         const inputKey = e.key.toUpperCase();
         if (containKeyLines(inputKey)) {
-          if (inputKey !== nextChar) {
+          const nextInputedKeys = inputedKeys + inputKey;
+          if (
+            !nextJaUnitCandidates.some(j =>
+              j.keys.some(k => k.startsWith(nextInputedKeys))
+            )
+          ) {
             hazureSound.pause();
             hazureSound.currentTime = 0;
             hazureSound.play();
             addMiss(nextChar);
             missObservable.publishMiss();
           } else {
-            const nextInputedCount = inputedCount + 1;
-            if (nextInputedCount < problem.alphabet.length) {
-              setInputedCount(inputedCount + 1);
+            const completeJaUnit = nextJaUnitCandidates.find(j =>
+              j.keys.some(k => k === nextInputedKeys)
+            );
+            if (completeJaUnit == null) {
+              setInputedKeys(nextInputedKeys);
             } else {
-              const nextProblemIndex = problemIndex + 1;
-              if (nextProblemIndex < problems.length) {
-                setInputedCount(0);
-                setProblemIndex(nextProblemIndex);
+              const nextInputedKanas = [
+                ...inputedKanas,
+                {
+                  kana: completeJaUnit.kana,
+                  key: nextInputedKeys
+                }
+              ];
+              setInputedKeys("");
+
+              const allKanaString = nextInputedKanas.reduce(
+                (acc, c) => acc + c.kana,
+                ""
+              );
+
+              if (problem.kana !== allKanaString) {
+                setInputedKanas(nextInputedKanas);
               } else {
-                setEndTime(new Date().getTime());
-                setMode(Mode.Result);
+                setCompleteProblemInputs([
+                  ...completeProblemInputs,
+                  nextInputedKanas.reduce((acc, c) => acc + c.key, "")
+                ]);
+                setInputedKanas([]);
+                const nextProblemIndex = problemIndex + 1;
+                if (nextProblemIndex < problems.length) {
+                  setProblemIndex(nextProblemIndex);
+                } else {
+                  setEndTime(new Date().getTime());
+                  setMode(Mode.Result);
+                }
               }
             }
           }
@@ -100,14 +161,17 @@ export const useGame = () => {
   }, [
     mode,
     nextChar,
-    inputedCount,
-    problem.alphabet.length,
+    inputedKanas,
+    inputedKeys,
     problemIndex,
     problems.length,
     shuffleProblems,
     addMiss,
     resetMisses,
-    missObservable
+    missObservable,
+    nextJaUnitCandidates,
+    problem,
+    completeProblemInputs
   ]);
 
   return {
@@ -122,8 +186,11 @@ export const useGame = () => {
     addMiss,
     countDownCount: count,
     nextChar,
-    inputedCountOfCurrentProblem: inputedCount,
+    inputedKeys,
+    inputedKanas,
+    remainKeys,
     problemIndex,
+    completeProblemInputs,
     ...missObservable
   };
 };

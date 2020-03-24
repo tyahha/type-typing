@@ -10,6 +10,7 @@ import {
 
 import { Problem } from "../../../../model/problem";
 import { useTypingContext } from "../../../../hooks/useTypingContext";
+import { InputedKana } from "../../../../hooks/useGame";
 
 const flashKeyflame = keyframes`
   50% {
@@ -17,13 +18,34 @@ const flashKeyflame = keyframes`
   }
 `;
 
-export const ProblemStringDisplay = (props: {
-  inputedCountOfCurrentProblem: number;
+export const ProblemStringDisplay = ({
+  inputedKanas,
+  inputedKeys,
+  remainKeys,
+  problems,
+  problemIndex
+}: {
+  inputedKanas: InputedKana[];
+  inputedKeys: string;
+  remainKeys: string;
   problems: Problem[];
   problemIndex: number;
 }) => {
   const { addMissObserver, removeMissObserver } = useTypingContext();
   const [animate, setAnimate] = useState(false);
+
+  const inputedKanaStringLength = inputedKanas.reduce<number>(
+    (acc, c) => acc + c.kana.length,
+    0
+  );
+
+  const allInputedKanaKeys = inputedKanas.reduce<string>(
+    (acc, c) => acc + c.key,
+    ""
+  );
+
+  const allInputedKeyCount = allInputedKanaKeys.length + inputedKeys.length;
+  const allKeys = allInputedKanaKeys + remainKeys;
 
   useEffect(() => {
     const secondMissObserver = () => {
@@ -47,9 +69,8 @@ export const ProblemStringDisplay = (props: {
     // eslint-disable-next-line
   }, []);
 
-  const problem = props.problems[props.problemIndex];
-  const barWidth = `${100 -
-    (100 * props.problemIndex) / props.problems.length}%`;
+  const problem = problems[problemIndex];
+  const barWidth = `${100 - (100 * problemIndex) / problems.length}%`;
 
   return (
     <StringDisplayFrame>
@@ -64,14 +85,14 @@ export const ProblemStringDisplay = (props: {
         )}
       >
         <StringContainer>{problem.main}</StringContainer>
-        <HiraganaContainer>{problem.kana}</HiraganaContainer>
+        <HiraganaContainer>
+          {problem.kana.split("").map((c, i) => (
+            <Alphabet key={i} char={c} inputed={i < inputedKanaStringLength} />
+          ))}
+        </HiraganaContainer>
         <StringContainer>
-          {problem.alphabet.split("").map((c, i) => (
-            <Alphabet
-              key={i}
-              char={c}
-              inputed={i < props.inputedCountOfCurrentProblem}
-            />
+          {allKeys.split("").map((c, i) => (
+            <Alphabet key={i} char={c} inputed={i < allInputedKeyCount} />
           ))}
         </StringContainer>
         <RemainProblemsBar width={barWidth} />

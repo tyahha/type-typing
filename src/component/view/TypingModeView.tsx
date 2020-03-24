@@ -7,7 +7,9 @@ import { useTypingContext } from "../../hooks/useTypingContext";
 
 export const TypingModeView = () => {
   const {
-    inputedCountOfCurrentProblem,
+    inputedKanas,
+    inputedKeys,
+    remainKeys,
     problems,
     problemIndex,
     nextChar
@@ -17,7 +19,9 @@ export const TypingModeView = () => {
     <>
       <ImgFrame imgUrl={problem.img} />
       <ProblemStringDisplay
-        inputedCountOfCurrentProblem={inputedCountOfCurrentProblem}
+        inputedKanas={inputedKanas}
+        inputedKeys={inputedKeys}
+        remainKeys={remainKeys}
         problems={problems}
         problemIndex={problemIndex}
       />

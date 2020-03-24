@@ -1,4 +1,3 @@
-import { Problem } from "./problem";
 import { formatTime, diffTime } from "./time";
 
 export type ResultItem = [string, string];
@@ -6,7 +5,7 @@ export type ResultItem = [string, string];
 export const createResult = (
   startTime: number,
   endTime: number,
-  problems: Problem[],
+  completeProblemInputs: string[],
   misses: Map<string, number>
 ): ResultItem[] => {
   const missStrings = [...misses]
@@ -14,8 +13,8 @@ export const createResult = (
     .slice(0, 3)
     .map(([s, num]) => `${s}(${num}回)`);
 
-  const allInputKeyCount = problems.reduce(
-    (acc, c) => acc + c.alphabet.length,
+  const allInputKeyCount = completeProblemInputs.reduce(
+    (acc, c) => acc + c.length,
     0
   );
 

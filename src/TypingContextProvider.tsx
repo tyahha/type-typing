@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import { Problem } from "./model/problem";
 import { Mode } from "./model/Mode";
-import { useGame } from "./hooks/useGame";
+import { useGame, InputedKana } from "./hooks/useGame";
 import { useMissObservable } from "./hooks/useMissObservable";
 
 export const TypingContext = createContext<
@@ -13,8 +13,11 @@ export const TypingContext = createContext<
     misses: Map<string, number>;
     countDownCount: number;
     nextChar: string;
-    inputedCountOfCurrentProblem: number;
+    inputedKeys: string;
+    inputedKanas: InputedKana[];
+    remainKeys: string;
     problemIndex: number;
+    completeProblemInputs: string[];
   } & Pick<
     ReturnType<typeof useMissObservable>,
     "addMissObserver" | "removeMissObserver"
@@ -27,8 +30,11 @@ export const TypingContext = createContext<
   misses: new Map(),
   countDownCount: 0,
   nextChar: "",
-  inputedCountOfCurrentProblem: 0,
+  inputedKeys: "",
+  inputedKanas: [],
+  remainKeys: "",
   problemIndex: 0,
+  completeProblemInputs: [],
   addMissObserver: () => {},
   removeMissObserver: () => {}
 });

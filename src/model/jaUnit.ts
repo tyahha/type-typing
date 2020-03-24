@@ -1,9 +1,9 @@
-interface JaInput {
+export interface JaUnit {
   kana: string;
   keys: string[];
 }
 
-export const SingleJaInputs: JaInput[] = [
+export const SingleJaUnits: JaUnit[] = [
   {
     kana: "あ",
     keys: ["A"]
@@ -330,10 +330,6 @@ export const SingleJaInputs: JaInput[] = [
     keys: ["LO", "XO"]
   },
   {
-    kana: "っ",
-    keys: ["LTU", "XTU", "LTSU", "XTSU"]
-  },
-  {
     kana: "ゃ",
     keys: ["LYA", "XYA"]
   },
@@ -359,7 +355,7 @@ export const SingleJaInputs: JaInput[] = [
   }
 ];
 
-export const MultiJaImputs: JaInput[] = [
+export const MultiJaUnits: JaUnit[] = [
   {
     kana: "きゃ",
     keys: ["KYA"]
@@ -761,3 +757,10 @@ export const MultiJaImputs: JaInput[] = [
     keys: ["FYO"]
   }
 ];
+
+export const jaUnits = [...MultiJaUnits, ...SingleJaUnits];
+
+export const geminateConsonant: JaUnit = {
+  kana: "っ",
+  keys: ["LTU", "XTU", "LTSU", "XTSU"]
+};
