@@ -1,37 +1,61 @@
 import { useState, useMemo, useEffect } from "react";
-import { useProblems } from "./useProblems";
-import { useMiss } from "./useMiss";
 import { Mode } from "../model/Mode";
 import { containKeyLines } from "../model/Keys";
 import { hazureSound } from "../assets/hazureSound";
 import { useMissObservable } from "./useMissObservable";
 import { getJaUnitCandidates } from "../model/getJaUnitCandidates";
 import { getKeys } from "../model/getKeys";
+import { Problem } from "../model/problem";
+import { problems } from "../assets/problems";
+import { shuffleArray } from "../util/shuffleArray";
 
 export interface InputedKana {
   kana: string;
   key: string;
 }
 
-export const useGame = () => {
-  const [mode, setMode] = useState(Mode.WaitStart);
-  const [startTime, setStartTime] = useState(new Date().getTime());
-  const [endTime, setEndTime] = useState(new Date().getTime());
+interface TypingState {
+  mode: Mode;
+  startTime: number;
+  endTime: number;
+  problems: Problem[];
+  problemIndex: number;
+  completeProblemInputs: string[];
+  misses: Map<string, number>;
+  inputedKanas: InputedKana[];
+  inputedKeys: string;
+}
 
-  const { problems, shuffleProblems } = useProblems();
-  const [problemIndex, setProblemIndex] = useState(0);
+const getInitialTypingState = (): TypingState => ({
+  mode: Mode.WaitStart,
+  startTime: 0,
+  endTime: 0,
+  problems: shuffleArray(problems),
+  problemIndex: 0,
+  completeProblemInputs: [],
+  misses: new Map(),
+  inputedKanas: [],
+  inputedKeys: ""
+});
+
+export const useGame = () => {
+  const [typingState, setTypingState] = useState(getInitialTypingState());
+  const {
+    mode,
+    startTime,
+    endTime,
+    problems,
+    problemIndex,
+    completeProblemInputs,
+    misses,
+    inputedKanas,
+    inputedKeys
+  } = typingState;
   const problem = useMemo(() => problems[problemIndex], [
     problems,
     problemIndex
   ]);
-  const [completeProblemInputs, setCompleteProblemInputs] = useState<string[]>(
-    []
-  );
-  const { misses, addMiss, resetMisses } = useMiss();
   const missObservable = useMissObservable();
-
-  const [inputedKanas, setInputedKanas] = useState<InputedKana[]>([]);
-  const [inputedKeys, setInputedKeys] = useState("");
 
   const remainKanas = useMemo(() => {
     const allInputedKanaLength = inputedKanas.reduce(
@@ -68,13 +92,17 @@ export const useGame = () => {
       setTimeout(() => {
         const nextCount = count - 1;
         if (nextCount === 0) {
-          setMode(Mode.Typing);
-          setStartTime(new Date().getTime());
+          setTypingState({
+            ...typingState,
+            mode: Mode.Typing,
+            startTime: new Date().getTime()
+          });
+        } else {
+          setCount(nextCount);
         }
-        setCount(nextCount);
       }, 1000);
     }
-  }, [mode, count]);
+  }, [mode, count, setTypingState, typingState]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -82,19 +110,13 @@ export const useGame = () => {
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
-          shuffleProblems();
-          resetMisses();
-          setCompleteProblemInputs([]);
-          setMode(Mode.CountDown);
+          setTypingState({ ...typingState, mode: Mode.CountDown });
+          setCount(3);
         }
       } else if (mode === Mode.Result) {
         const inputKey = e.key.toUpperCase();
         if (inputKey === "R") {
-          setCount(3);
-          setInputedKanas([]);
-          setInputedKeys("");
-          setProblemIndex(0);
-          setMode(Mode.WaitStart);
+          setTypingState(getInitialTypingState);
         }
       } else if (mode === Mode.Typing) {
         const inputKey = e.key.toUpperCase();
@@ -105,17 +127,44 @@ export const useGame = () => {
               j.keys.some(k => k.startsWith(nextInputedKeys))
             )
           ) {
-            hazureSound.pause();
-            hazureSound.currentTime = 0;
-            hazureSound.play();
-            addMiss(nextChar);
-            missObservable.publishMiss();
+            if (
+              remainKanas.length > 1 &&
+              remainKanas[0] === "ん" &&
+              inputedKeys === "N" &&
+              !"あいうえお".includes(remainKanas[1]) &&
+              getJaUnitCandidates(remainKanas[1], "").some(c =>
+                c.keys.some(k => k.startsWith(inputKey))
+              )
+            ) {
+              // NNの後ろのNを省略できるパターン
+              setTypingState({
+                ...typingState,
+                inputedKeys: inputKey,
+                inputedKanas: [
+                  ...inputedKanas,
+                  {
+                    kana: "ん",
+                    key: "N"
+                  }
+                ]
+              });
+            } else {
+              hazureSound.pause();
+              hazureSound.currentTime = 0;
+              hazureSound.play();
+              const count = misses.get(nextChar) ?? 0;
+              setTypingState({
+                ...typingState,
+                misses: new Map([...typingState.misses, [nextChar, count + 1]])
+              });
+              missObservable.publishMiss();
+            }
           } else {
             const completeJaUnit = nextJaUnitCandidates.find(j =>
               j.keys.some(k => k === nextInputedKeys)
             );
             if (completeJaUnit == null) {
-              setInputedKeys(nextInputedKeys);
+              setTypingState({ ...typingState, inputedKeys: nextInputedKeys });
             } else {
               const nextInputedKanas = [
                 ...inputedKanas,
@@ -124,7 +173,10 @@ export const useGame = () => {
                   key: nextInputedKeys
                 }
               ];
-              setInputedKeys("");
+
+              const nextState: Partial<TypingState> = {
+                inputedKeys: ""
+              };
 
               const allKanaString = nextInputedKanas.reduce(
                 (acc, c) => acc + c.kana,
@@ -132,21 +184,23 @@ export const useGame = () => {
               );
 
               if (problem.kana !== allKanaString) {
-                setInputedKanas(nextInputedKanas);
+                nextState.inputedKanas = nextInputedKanas;
               } else {
-                setCompleteProblemInputs([
+                nextState.completeProblemInputs = [
                   ...completeProblemInputs,
                   nextInputedKanas.reduce((acc, c) => acc + c.key, "")
-                ]);
-                setInputedKanas([]);
+                ];
+                nextState.inputedKanas = [];
                 const nextProblemIndex = problemIndex + 1;
                 if (nextProblemIndex < problems.length) {
-                  setProblemIndex(nextProblemIndex);
+                  nextState.problemIndex = nextProblemIndex;
                 } else {
-                  setEndTime(new Date().getTime());
-                  setMode(Mode.Result);
+                  nextState.endTime = new Date().getTime();
+                  nextState.mode = Mode.Result;
                 }
               }
+
+              setTypingState({ ...typingState, ...nextState });
             }
           }
         }
@@ -159,31 +213,29 @@ export const useGame = () => {
       window.removeEventListener("keydown", handler);
     };
   }, [
+    typingState,
+    misses,
     mode,
     nextChar,
     inputedKanas,
     inputedKeys,
     problemIndex,
     problems.length,
-    shuffleProblems,
-    addMiss,
-    resetMisses,
+    setTypingState,
     missObservable,
     nextJaUnitCandidates,
     problem,
-    completeProblemInputs
+    completeProblemInputs,
+    remainKanas,
+    remainKeys
   ]);
 
   return {
     mode,
-    setMode,
     startTime,
-    setStartTime,
     endTime,
-    setEndTime,
     problems,
     misses,
-    addMiss,
     countDownCount: count,
     nextChar,
     inputedKeys,

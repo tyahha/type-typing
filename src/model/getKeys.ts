@@ -8,5 +8,5 @@ export const getKeys = (kana: string, inputedKeys: string): string => {
     const remain = kana.slice(candidate.kana.length);
     return candidate.keys[0] + (remain.length === 0 ? "" : getKeys(remain, ""));
   }
-  throw new Error(`not match kana: ${kana}`);
+  throw new Error(`not match kana: kana=${kana}, inputedKeys=${inputedKeys}`);
 };
