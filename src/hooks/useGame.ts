@@ -131,7 +131,7 @@ export const useGame = () => {
               remainKanas.length > 1 &&
               remainKanas[0] === "ん" &&
               inputedKeys === "N" &&
-              !"あいうえお".includes(remainKanas[1]) &&
+              !"あいうえおなにぬねのん".includes(remainKanas[1]) &&
               getJaUnitCandidates(remainKanas[1], "").some(c =>
                 c.keys.some(k => k.startsWith(inputKey))
               )
