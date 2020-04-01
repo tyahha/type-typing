@@ -7,7 +7,7 @@ export const StringDisplayFrame = styled.div`
 
 export const StringDisplayContent = styled.div`
   margin: 5px;
-  height: 120px;
+  height: 140px;
   padding: 0 10px 10px 10px;
   border-color: rgb(55, 55, 65);
   border-style: solid;

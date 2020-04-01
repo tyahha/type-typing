@@ -18,5 +18,5 @@ export const WaitForStartStringDisplay = () => (
 const WaitStringContainer = styled(StringContainer)`
   color: rgb(121, 121, 26);
   text-align: center;
-  margin: 40px;
+  margin: 45px;
 `;

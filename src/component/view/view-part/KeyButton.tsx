@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const keyButtonLength = "48px";
+const keyButtonLength = "50px";
 
 export const KeyButton = styled.div<{
   highLight?: boolean;

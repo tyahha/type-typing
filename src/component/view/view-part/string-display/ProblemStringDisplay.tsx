@@ -102,7 +102,7 @@ export const ProblemStringDisplay = ({
 };
 
 const HiraganaContainer = styled(StringContainer)`
-  font-size: 20px;
+  font-size: 22px;
 `;
 
 const RemainProblemsBar = styled.div<{
@@ -110,7 +110,7 @@ const RemainProblemsBar = styled.div<{
 }>`
   background-color: rgb(72, 18, 160);
   position: relative;
-  bottom: -7px;
+  bottom: -10px;
   height: 5px;
   width: ${props => props.width};
 `;

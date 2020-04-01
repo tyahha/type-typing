@@ -60,7 +60,7 @@ const Finger = styled.div<{
     props.highLight ? "rgb(226, 96, 9)" : "rgb(110, 110, 110)"};
   width: 60px;
   height: 100px;
-  margin: auto 0 0 0;
+  margin: auto 2px 0 2px;
 `;
 
 const Thumb = styled(Finger)`

@@ -38,7 +38,7 @@ const ResultFrame = styled.div`
 
 const ResultContentArea = styled.div`
   margin: 5px;
-  height: calc(100% - 20px);
+  height: calc(100% - 12px);
   padding: 0;
   border-color: rgb(55, 55, 65);
   border-style: solid;
