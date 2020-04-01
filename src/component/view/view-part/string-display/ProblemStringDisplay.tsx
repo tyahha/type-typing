@@ -87,14 +87,14 @@ export const ProblemStringDisplay = ({
         <StringContainer>{problem.main}</StringContainer>
         <HiraganaContainer>
           {problem.kana.split("").map((c, i) => (
-            <Alphabet key={i} char={c} inputed={i < inputedKanaStringLength} />
+            <Charctor key={i} char={c} inputed={i < inputedKanaStringLength} />
           ))}
         </HiraganaContainer>
-        <StringContainer>
+        <BoldedStringContainer>
           {allKeys.split("").map((c, i) => (
-            <Alphabet key={i} char={c} inputed={i < allInputedKeyCount} />
+            <Charctor key={i} char={c} inputed={i < allInputedKeyCount} />
           ))}
-        </StringContainer>
+        </BoldedStringContainer>
         <RemainProblemsBar width={barWidth} />
       </StringDisplayContent>
     </StringDisplayFrame>
@@ -110,12 +110,16 @@ const RemainProblemsBar = styled.div<{
 }>`
   background-color: rgb(72, 18, 160);
   position: relative;
-  bottom: -10px;
+  bottom: -3px;
   height: 5px;
   width: ${props => props.width};
 `;
 
-const Alphabet = (props: { char: string; inputed: boolean }) => (
+const BoldedStringContainer = styled(StringContainer)`
+  font-weight: bold;
+`;
+
+const Charctor = (props: { char: string; inputed: boolean }) => (
   <span
     className={css`
       color: ${props.inputed ? "rgb(156, 132, 196)" : "inherit"};

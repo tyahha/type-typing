@@ -14,7 +14,7 @@ export const KeyButton = styled.div<{
   border-width: 1px;
   text-align: center;
   font-size: 38px;
-  line-height: 43px;
+  line-height: 52px;
   background-color: ${props =>
     props.highLight ? "rgb(158, 104, 34)" : "rgb(185, 204, 230)"};
 `;
@@ -34,5 +34,5 @@ export const KeyButtonDoubleHalf = styled(KeyButton)`
 export const KeyButtonSpace = styled(KeyButton)`
   width: 230px;
   font-size: 35px;
-  line-height: 35px;
+  line-height: 45px;
 `;
