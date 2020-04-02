@@ -24,6 +24,7 @@ interface TypingState {
   misses: Map<string, number>;
   inputedKanas: InputedKana[];
   inputedKeys: string;
+  countDownCount: number;
 }
 
 const getInitialTypingState = (): TypingState => ({
@@ -35,7 +36,8 @@ const getInitialTypingState = (): TypingState => ({
   completeProblemInputs: [],
   misses: new Map(),
   inputedKanas: [],
-  inputedKeys: ""
+  inputedKeys: "",
+  countDownCount: 3
 });
 
 export const useGame = () => {
@@ -49,7 +51,8 @@ export const useGame = () => {
     completeProblemInputs,
     misses,
     inputedKanas,
-    inputedKeys
+    inputedKeys,
+    countDownCount
   } = typingState;
   const problem = useMemo(() => problems[problemIndex], [
     problems,
@@ -86,11 +89,10 @@ export const useGame = () => {
     }
   }, [mode, nextJaUnitCandidates, inputedKeys]);
 
-  const [count, setCount] = useState(3);
   useEffect(() => {
     if (mode === Mode.CountDown) {
       setTimeout(() => {
-        const nextCount = count - 1;
+        const nextCount = countDownCount - 1;
         if (nextCount === 0) {
           setTypingState({
             ...typingState,
@@ -98,11 +100,11 @@ export const useGame = () => {
             startTime: new Date().getTime()
           });
         } else {
-          setCount(nextCount);
+          setTypingState({ ...typingState, countDownCount: nextCount });
         }
       }, 1000);
     }
-  }, [mode, count, setTypingState, typingState]);
+  }, [mode, countDownCount, setTypingState, typingState]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -111,7 +113,6 @@ export const useGame = () => {
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
           setTypingState({ ...typingState, mode: Mode.CountDown });
-          setCount(3);
         }
       } else if (mode === Mode.Result) {
         const inputKey = e.key.toUpperCase();
@@ -236,7 +237,7 @@ export const useGame = () => {
     endTime,
     problems,
     misses,
-    countDownCount: count,
+    countDownCount,
     nextChar,
     inputedKeys,
     inputedKanas,

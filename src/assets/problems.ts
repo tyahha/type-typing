@@ -41,6 +41,23 @@ export const problems: Problem[] = [
     kana: "えんばしられんごくきょうじゅろう"
   },
   {
+    img: "https://i.ytimg.com/vi/hSz9Tjxyj1k/maxresdefault.jpg",
+    main: "恋柱 甘露寺蜜璃",
+    kana: "こいばしらかんろじみつり"
+  },
+  {
+    img:
+      "https://appmedia.jp/wp-content/uploads/2019/07/710f05c2e91ccd3443aa3e7cfe092bfd.jpg",
+    main: "御坂美琴",
+    kana: "みさかみこと"
+  },
+  {
+    img:
+      "https://i-ogp.pximg.net/c/540x540_70/img-master/img/2010/08/29/15/55/23/12891054_p0_square1200.jpg",
+    main: "ジャッジメントですの",
+    kana: "じゃっじめんとですの"
+  },
+  {
     img:
       "https://shop6-makeshop.akamaized.net/shopimages/thechara55/0000000168982_Gg0cV7g.jpg",
     main: "竈門炭治郎",
