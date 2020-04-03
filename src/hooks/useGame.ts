@@ -108,7 +108,7 @@ export const useGame = () => {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      console.log("on keyborad event", e);
+      //console.log("on keyborad event", e);
 
       if (mode === Mode.WaitStart) {
         if (e.key === " ") {
@@ -150,7 +150,6 @@ export const useGame = () => {
                 ]
               });
             } else {
-              hazureSound.pause();
               hazureSound.currentTime = 0;
               hazureSound.play();
               const count = misses.get(nextChar) ?? 0;
