@@ -1,18 +1,24 @@
 import React from "react";
 import { TypingContextProvider } from "./TypingContextProvider";
+import { TypingMockContextProvider } from "./TypingMockContextProvider";
 import { ViewSwitcher } from "./component/ViewSwicher";
 
 import styled from "@emotion/styled";
 
+const mock = true;
+const ContextProvider = mock
+  ? TypingMockContextProvider
+  : TypingContextProvider;
+
 export const App = () => {
   return (
-    <TypingContextProvider>
+    <ContextProvider>
       <FullDisplay>
         <GameDisplay>
           <ViewSwitcher />
         </GameDisplay>
       </FullDisplay>
-    </TypingContextProvider>
+    </ContextProvider>
   );
 };
 
