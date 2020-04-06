@@ -6,7 +6,7 @@ import { Mode } from "./model/Mode";
 export const TypingMockContextProvider: React.FC = props => (
   <TypingContext.Provider
     value={{
-      mode: Mode.WaitStart,
+      mode: Mode.Result,
       startTime: 0,
       endTime: 1234567,
       problems: problems,
@@ -15,7 +15,7 @@ export const TypingMockContextProvider: React.FC = props => (
       misses: new Map([["K", 3]]),
       inputedKanas: [],
       inputedKeys: "",
-      countDownCount: 3,
+      countDownCount: 2,
       nextChar: "T",
       remainKeys: "TEST",
       addMissObserver: () => {},

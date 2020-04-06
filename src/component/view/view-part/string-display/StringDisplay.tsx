@@ -17,5 +17,4 @@ export const StringDisplayContent = styled.div`
 
 export const StringContainer = styled.p`
   font-size: 30px;
-  margin: 0px;
 `;

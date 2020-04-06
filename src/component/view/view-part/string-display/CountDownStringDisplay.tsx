@@ -19,4 +19,5 @@ const CountDownStringContainer = styled(StringContainer)`
   color: rgb(121, 121, 26);
   text-align: center;
   font-size: 90px;
+  margin-top: 7px;
 `;

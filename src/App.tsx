@@ -5,7 +5,7 @@ import { ViewSwitcher } from "./component/ViewSwicher";
 
 import styled from "@emotion/styled";
 
-const mock = true;
+const mock = false;
 const ContextProvider = mock
   ? TypingMockContextProvider
   : TypingContextProvider;
