@@ -5,6 +5,8 @@ export const StringDisplayFrame = styled.div`
   height: 150px;
 `;
 
+export const StringDisplayContentBackgroundColor = "#c1bdeb";
+
 export const StringDisplayContent = styled.div`
   margin: 5px;
   height: 140px;
@@ -12,7 +14,7 @@ export const StringDisplayContent = styled.div`
   border-color: rgb(55, 55, 65);
   border-style: solid;
   border-width: 1px;
-  background-color: #c1bdeb;
+  background-color: ${StringDisplayContentBackgroundColor};
 `;
 
 export const StringContainer = styled.p`

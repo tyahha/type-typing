@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { css, keyframes } from "emotion";
+import React, { useEffect, useRef } from "react";
+import { css } from "emotion";
 import styled from "@emotion/styled";
 
 import {
   StringDisplayFrame,
   StringDisplayContent,
-  StringContainer
+  StringContainer,
+  StringDisplayContentBackgroundColor
 } from "./StringDisplay";
 
 import { Problem } from "../../../../model/problem";
 import { useTypingContext } from "../../../../hooks/useTypingContext";
 import { InputedKana } from "../../../../hooks/useGame";
-
-const flashKeyflame = keyframes`
-  50% {
-    background-color: rgb(218, 211, 27);
-  }
-`;
 
 export const ProblemStringDisplay = ({
   inputedKanas,
@@ -32,7 +27,6 @@ export const ProblemStringDisplay = ({
   problemIndex: number;
 }) => {
   const { addMissObserver, removeMissObserver } = useTypingContext();
-  const [animate, setAnimate] = useState(false);
 
   const inputedKanaStringLength = inputedKanas.reduce<number>(
     (acc, c) => acc + c.kana.length,
@@ -47,43 +41,38 @@ export const ProblemStringDisplay = ({
   const allInputedKeyCount = allInputedKanaKeys.length + inputedKeys.length;
   const allKeys = allInputedKanaKeys + remainKeys;
 
+  const ref = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const secondMissObserver = () => {
-      setAnimate(false);
-      window.requestAnimationFrame(function() {
-        window.requestAnimationFrame(function() {
-          setAnimate(true);
-        });
-      });
+    const o = () => {
+      if (ref.current) {
+        ref.current.animate(
+          {
+            backgroundColor: [
+              "rgb(218, 211, 27)",
+              StringDisplayContentBackgroundColor
+            ]
+          },
+          {
+            duration: 100,
+            easing: "ease-in"
+          }
+        );
+      }
     };
-    const firstMissObserver = () => {
-      setAnimate(true);
-      removeMissObserver(firstMissObserver);
-      addMissObserver(secondMissObserver);
-    };
-    addMissObserver(firstMissObserver);
+    addMissObserver(o);
     return () => {
-      removeMissObserver(firstMissObserver);
-      removeMissObserver(secondMissObserver);
+      removeMissObserver(o);
     };
     // eslint-disable-next-line
-  }, []);
+  }, [ref]);
 
   const problem = problems[problemIndex];
   const barWidth = `${100 - (100 * problemIndex) / problems.length}%`;
 
   return (
     <StringDisplayFrame>
-      <StringDisplayContent
-        className={css(
-          animate
-            ? {
-                animation: `${flashKeyflame} 0.1s ease-in`,
-                animationIterationCount: 1
-              }
-            : undefined
-        )}
-      >
+      <StringDisplayContent ref={ref}>
         <StringContainer>{problem.main}</StringContainer>
         <HiraganaContainer>
           {problem.kana.split("").map((c, i) => (
