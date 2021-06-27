@@ -4,7 +4,7 @@ import gontaImgSrc from "./gonta.jpg";
 export const problems: Problem[] = [
   {
     img:
-      "https://pbs.twimg.com/profile_images/1175673119240900608/EgmHSvYM_400x400.jpg",
+      "https://kimetu.work/wp-content/uploads/2020/12/kotyouuuuu.jpg",
     main: "胡蝶しのぶ",
     kana: "こちょうしのぶ"
   },
